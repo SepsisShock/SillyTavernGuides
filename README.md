@@ -10,7 +10,7 @@ Beginner-friendly explanations, visual walkthroughs, and practical examples for 
 
 <br>
 
-[**Browse the Guides**](#-guide-library) &nbsp;·&nbsp; [**SillyTavern**](https://github.com/SillyTavern/SillyTavern) &nbsp;·&nbsp; [**Official Docs**](https://docs.sillytavern.app/)
+[**Visit the Website**](https://sepsisshock.github.io/SillyTavernGuides/) &nbsp;·&nbsp; [**Browse the Guides**](#-guide-library) &nbsp;·&nbsp; [**SillyTavern**](https://github.com/SillyTavern/SillyTavern) &nbsp;·&nbsp; [**Official Docs**](https://docs.sillytavern.app/)
 
 </div>
 
