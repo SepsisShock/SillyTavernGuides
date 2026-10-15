@@ -89,4 +89,18 @@ function parcelHTML(m,i){return `<div class="parcel ${escapeHTML(m.role)}" style
 function renderMode(mode){const d=sets[mode];document.getElementById('modeExplain').textContent=d.explain;document.getElementById('count').textContent=d.items.length+' message container'+(d.items.length===1?'':'s');document.getElementById('messages').className='package-stack';document.getElementById('messages').innerHTML=d.items.map(parcelHTML).join('');let merge=document.getElementById('mergeVisual');if(!merge){merge=document.createElement('div');merge.id='mergeVisual';document.getElementById('messages').before(merge)}merge.innerHTML=mode==='merge'?`<div class="compare-caption">Before: three neighboring System packages, top to bottom</div><div class="packages-before"><div class="mini-parcel"><span>Main Prompt · SYSTEM</span></div><div class="mini-parcel"><span>Character &amp; Scenario · SYSTEM</span></div><div class="mini-parcel"><span>Lorebook · SYSTEM</span></div></div><div class="transition-arrow" aria-hidden="true">↓ Combine matching labels ↓</div><div class="compare-caption">After: processed packages, in message order</div>`:'';document.querySelectorAll('#modes button').forEach(b=>{b.classList.toggle('active',b.dataset.mode===mode);b.setAttribute('aria-pressed',b.dataset.mode===mode)})}
 function renderTools(v){let html='';if(v==='with'){const data=[msg('assistant','AI requests a web search','Assistant tool call',['Assistant tool-call information']),msg('tool','Tool result','Tool response preserved in the demonstration',['Tool result'])];html=data.map((m,i)=>`${i?'<div class="transition-arrow" aria-hidden="true">↓</div>':''}${parcelHTML(m,i)}`).join('')}else{html=`<div class="excluded-notice" role="status"><strong><span class="status-icon" aria-hidden="true">⊘</span>Tool-call information removed</strong><p>This is a notice, not a package sent to the API. The non-tool-preserving PPP variant removes tool-call information instead of packing it into another role.</p></div>`}document.getElementById('toolDemo').className='tool-demo-ship';document.getElementById('toolDemo').innerHTML=html;document.querySelectorAll('#tools button').forEach(b=>{b.classList.toggle('active',b.dataset.tools===v);b.setAttribute('aria-pressed',b.dataset.tools===v)})}
 document.querySelectorAll('#modes button').forEach(b=>b.addEventListener('click',()=>renderMode(b.dataset.mode)));document.querySelectorAll('#tools button').forEach(b=>b.addEventListener('click',()=>renderTools(b.dataset.tools)));renderMode('none');renderTools('with');
+</script><script>
+document.addEventListener('pointerdown',event=>{
+  document.querySelectorAll('.st-site-nav details[open]').forEach(menu=>{
+    if(!menu.contains(event.target)) menu.open=false;
+  });
+});
+document.addEventListener('keydown',event=>{
+  if(event.key==='Escape'){
+    document.querySelectorAll('.st-site-nav details[open]').forEach(menu=>{
+      menu.open=false;
+      menu.querySelector('summary')?.focus();
+    });
+  }
+});
 </script></body></html>
