@@ -49,4 +49,18 @@ const frame=document.getElementById('demoFrame');
 function renderStage(stage){frame.replaceChildren();const heading=document.createElement('div');heading.className='demo-heading';heading.textContent=['YOU ASK A QUESTION','THE AI ASKS THE MAILROOM','THE TOOL REPORTS BACK','THE AI GIVES AN ANSWER'][stage];frame.append(heading);for(const item of frames[stage]){const bubble=document.createElement('div');bubble.className='bubble '+item.type;const who=document.createElement('div');who.className='who';who.textContent=item.who;const msg=document.createElement('p');msg.textContent=item.message;bubble.append(who,msg);frame.append(bubble);}for(const button of document.querySelectorAll('[data-stage]'))button.setAttribute('aria-pressed',String(Number(button.dataset.stage)===stage));}
 for(const button of document.querySelectorAll('[data-stage]'))button.addEventListener('click',()=>renderStage(Number(button.dataset.stage)));
 renderStage(0);
+</script><script>
+document.addEventListener('pointerdown',event=>{
+  document.querySelectorAll('.st-site-nav details[open]').forEach(menu=>{
+    if(!menu.contains(event.target)) menu.open=false;
+  });
+});
+document.addEventListener('keydown',event=>{
+  if(event.key==='Escape'){
+    document.querySelectorAll('.st-site-nav details[open]').forEach(menu=>{
+      menu.open=false;
+      menu.querySelector('summary')?.focus();
+    });
+  }
+});
 </script></body></html>
