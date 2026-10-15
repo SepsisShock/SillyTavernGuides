@@ -12,9 +12,19 @@ a{color:var(--accent)}a:hover{text-decoration-thickness:2px}.page{max-width:1000
 
 .cost-warning{background:#30291e;border:1px solid #8d6d3c;border-left:4px solid var(--gold);border-radius:10px;padding:16px 19px;margin:24px 0}.cost-warning h2{font-size:1.14rem;margin:0 0 7px;color:#f1ce91}.cost-warning p{margin:0;color:#f0dfc3}
 </style>
-</head>
-<body><main class="page">
-<header class="hero"><div class="eyebrow">SILLYTAVERN • BEGINNER GUIDE</div><h1>Tool Calls</h1><p class="lead">How an AI asks another program for help, and what actually happens when it does.</p></header>
+<style>
+/* Shared site navigation */
+.st-site-nav{max-width:1040px;margin:0 auto;padding:20px 24px 15px;display:flex;align-items:center;justify-content:space-between;gap:16px;border-bottom:1px solid #344353;font:500 14px/1.5 system-ui,-apple-system,Segoe UI,sans-serif;color:#e5eaf2}
+.st-site-nav a{color:#b2c1d1;text-decoration:none}.st-site-nav a:hover,.st-site-nav summary:hover{color:#83c9d9}
+.st-site-nav .st-brand{color:#83c9d9;font-weight:800;letter-spacing:.12em;font-size:13px}
+.st-site-actions{display:flex;align-items:center;gap:22px}
+.st-site-nav details{position:relative}.st-site-nav summary{list-style:none;cursor:pointer;color:#b2c1d1;user-select:none}.st-site-nav summary::-webkit-details-marker{display:none}.st-site-nav summary:after{content:" ▾";color:#83c9d9}
+.st-site-nav .st-menu{position:absolute;right:0;top:calc(100% + 12px);min-width:220px;padding:8px;background:#19212b;border:1px solid #344353;border-radius:12px;box-shadow:0 12px 32px #0007;z-index:50}
+.st-site-nav .st-menu a{display:block;padding:9px 11px;border-radius:7px}.st-site-nav .st-menu a:hover{background:#283844}.st-site-nav a[aria-current="page"]{color:#83c9d9;font-weight:700}
+@media(max-width:520px){.st-site-nav{padding:16px;gap:8px;flex-wrap:wrap}.st-site-nav .st-brand{font-size:11px}.st-site-actions{gap:15px}}
+</style></head>
+<body><nav class="st-site-nav" aria-label="Site navigation"><a class="st-brand" href="./index.html">ST BEGINNER GUIDES</a><div class="st-site-actions"><a href="./index.html">Home</a><details><summary>Guides</summary><div class="st-menu"><a href="./regex.html">Regex Basics</a><a href="./ppp.html">Prompt Post-Processing</a><a href="./tool-calls.html" aria-current="page">Tool Calls</a></div></details></div></nav><main class="page">
+<header class="hero"><h1>Tool Calls</h1><p class="lead">How an AI asks another program for help, and what actually happens when it does.</p></header>
 <nav aria-label="On this page"><strong>On this page</strong><div class="navlinks"><a href="#what">What are tool calls?</a><a href="#demo">Try an example</a><a href="#enable">Turn them on</a><a href="#api">Chat vs. Text</a><a href="#tools">Available tools</a><a href="#ppp">PPP &amp; tools</a><a href="#faq">Questions</a></div></nav>
 <section id="what"><h2>What is a tool call?</h2><p>Imagine the AI as a receptionist. You ask, “What’s 2 + 2?” They already know the answer. But if you ask, “Has my package arrived?” they contact the mailroom, get the answer, and tell you.</p><p>The AI works similarly: it can answer directly or request help when a suitable tool is available. <strong style="color:var(--text)">A tool call is when the AI requests that another program perform a specific job.</strong> SillyTavern or a compatible integration runs that tool, returns the result, and the AI can use it to reply.</p>
 <div class="steps" aria-label="Four steps in a tool call"><div class="step"><span class="number">1</span><div><strong>You ask something</strong><p>“Has my package arrived?”</p></div></div><div class="down" aria-hidden="true">↓</div><div class="step"><span class="number">2</span><div><strong>The AI requests a tool</strong><p>The receptionist asks the mailroom to check. In SillyTavern, the AI requests a tool. That request is the <em>tool call</em>.</p></div></div><div class="down" aria-hidden="true">↓</div><div class="step tool"><span class="number">3</span><div><strong>The tool does the job</strong><p>The mailroom checks and reports back. In SillyTavern, software runs the tool and returns its result.</p></div></div><div class="down" aria-hidden="true">↓</div><div class="step"><span class="number">4</span><div><strong>The AI replies to you</strong><p>“Yes, your package is here!”</p></div></div></div><p class="diagram-caption">The receptionist and mailroom are an analogy. Real tool calls use structured requests to software, not phone calls.</p>
