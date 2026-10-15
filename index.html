@@ -24,4 +24,18 @@ main{max-width:1040px;padding:28px 24px 70px;margin:auto}h1{font-size:clamp(2.7r
 </div></section>
 <section class="about"><h2>About This Collection</h2><p>Some topics use interactive demonstrations; others use diagrams, tables, or step-by-step examples. The presentation changes to suit the subject.</p><div class="note">These are independent, community-made guides, not official SillyTavern documentation. Features and settings can change over time.</div></section>
 <footer><p><a href="https://docs.sillytavern.app/">Official SillyTavern Docs</a> · <a href="https://github.com/SepsisShock/SillyTavernGuides">GitHub Repository</a></p><p>SepsisShock · October 2026</p></footer>
-</main></body></html>
+</main><script>
+document.addEventListener('pointerdown',event=>{
+  document.querySelectorAll('.st-site-nav details[open]').forEach(menu=>{
+    if(!menu.contains(event.target)) menu.open=false;
+  });
+});
+document.addEventListener('keydown',event=>{
+  if(event.key==='Escape'){
+    document.querySelectorAll('.st-site-nav details[open]').forEach(menu=>{
+      menu.open=false;
+      menu.querySelector('summary')?.focus();
+    });
+  }
+});
+</script></body></html>
