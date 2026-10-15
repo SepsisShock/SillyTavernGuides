@@ -141,3 +141,52 @@
   }
 }
 
+
+/* Introductory find-and-replace walkthrough. */
+.regex-demo {
+  margin: var(--space-5) 0;
+  padding: var(--space-5);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+}
+.regex-demo h3 { margin-top: 0; }
+.regex-demo > p { margin-block: var(--space-3); }
+.regex-demo-label {
+  display: block;
+  margin-bottom: var(--space-2);
+  color: var(--color-muted);
+  font-size: .79rem;
+  font-weight: 650;
+}
+.regex-demo-message, .regex-demo-field {
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--color-border-soft);
+  border-radius: var(--radius-sm);
+  background: var(--color-code);
+}
+.regex-demo-message p { margin: 0; }
+.regex-demo-fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-3);
+  margin: var(--space-3) 0;
+}
+.regex-demo-field code { color: var(--color-accent); }
+.regex-demo-field:last-child code { color: var(--color-replace); }
+.regex-demo-result { border-color: #496b60; }
+.regex-demo-result mark {
+  background: #28483e;
+  color: #d7f5e8;
+  border-radius: 2px;
+  padding: 0 .1em;
+}
+.regex-demo .regex-demo-note {
+  margin-bottom: 0;
+  color: var(--color-muted);
+  font-size: .9rem;
+}
+@media (max-width: 480px) {
+  .regex-demo { padding: var(--space-4); }
+  .regex-demo-fields { grid-template-columns: minmax(0, 1fr); }
+}
