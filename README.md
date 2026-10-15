@@ -4,8 +4,6 @@
 
 <sub>Established October 2026</sub>
 
-**A little library for making sense of SillyTavern.**
-
 Beginner-friendly explanations, visual walkthroughs, and practical examples for the settings and features that deserve a closer look.
 
 <br>
@@ -18,21 +16,14 @@ Beginner-friendly explanations, visual walkthroughs, and practical examples for 
 
 ## ◈ Guide Library
 
-Pick a topic and explore it at your own pace. The guides are written to make unfamiliar features easier to understand, with diagrams, examples, and explanations where they help.
+The guides are written to make unfamiliar features easier to understand, with diagrams, examples, and explanations where they help.
 
 <table>
   <tr>
-    <th width="50%" align="left">01 &nbsp; / &nbsp; REGEX BASICS</th>
-    <th width="50%" align="left">02 &nbsp; / &nbsp; PROMPT POST-PROCESSING</th>
+    <th width="50%" align="left">PROMPT POST-PROCESSING</th>
+    <th width="50%" align="left">REGEX BASICS</th>
   </tr>
   <tr>
-    <td valign="top">
-      <strong>Find it. Change it. Control it.</strong>
-      <br><br>
-      Learn how SillyTavern regex scripts work, what goes in Find Regex and Replace With, and how the available settings affect your chat.
-      <br><br>
-      <a href="https://sepsisshock.github.io/SillyTavernGuides/regex.html"><strong>↗ Open Regex Basics</strong></a>
-    </td>
     <td valign="top">
       <strong>See how your prompt gets packed.</strong>
       <br><br>
@@ -40,9 +31,16 @@ Pick a topic and explore it at your own pace. The guides are written to make unf
       <br><br>
       <a href="https://sepsisshock.github.io/SillyTavernGuides/ppp.html"><strong>↗ Open Prompt Post-Processing</strong></a>
     </td>
+    <td valign="top">
+      <strong>Find it. Change it. Control it.</strong>
+      <br><br>
+      Learn how SillyTavern regex scripts work, what goes in Find Regex and Replace With, and how the available settings affect your chat.
+      <br><br>
+      <a href="https://sepsisshock.github.io/SillyTavernGuides/regex.html"><strong>↗ Open Regex Basics</strong></a>
+    </td>
   </tr>
   <tr>
-    <th colspan="2" align="left">03 &nbsp; / &nbsp; TOOL CALLS</th>
+    <th colspan="2" align="left">TOOL CALLS</th>
   </tr>
   <tr>
     <td colspan="2" valign="top">
@@ -58,8 +56,8 @@ Pick a topic and explore it at your own pace. The guides are written to make unf
 <!--
 ADD MORE GUIDES HERE.
 
-For a new row of two guides, copy the table structure above and change:
-- The number and topic in each <th>.
+For new guides, keep the topics in alphabetical order. Copy the table structure above and change:
+- The topic in each <th>.
 - The short description in each <td>.
 - The linked HTML filename.
 
