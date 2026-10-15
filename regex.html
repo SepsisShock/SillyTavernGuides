@@ -38,9 +38,32 @@
         <section id="find" class="guide-section">
           <h2>What goes in <span class="field">Find Regex</span></h2>
           <figure class="screenshot"><img alt="Find Regex box" data-fallback="https://raw.githubusercontent.com/SepsisShock/NTR-Extension/main/assets/regex-help/find-regex.png" decoding="async" loading="lazy" src="https://cdn.jsdelivr.net/gh/SepsisShock/NTR-Extension@main/assets/regex-help/find-regex.png"></figure>
-          <p>Type what you're looking for between two slashes, like <code>/native/</code>. Letters after the last slash change how it searches, like the <code>g</code> in <code>/native/g</code>.</p>
+          <div class="regex-demo" aria-label="Simple find and replace example">
+            <h3>A quick example</h3>
+            <p>Let's say you want to replace every “cat” with “dog”.</p>
+            <div class="regex-demo-message">
+              <span class="regex-demo-label">Original message</span>
+              <p>The cat sat beside another cat.</p>
+            </div>
+            <div class="regex-demo-fields">
+              <div class="regex-demo-field">
+                <span class="regex-demo-label">Find Regex</span>
+                <code>/cat/g</code>
+              </div>
+              <div class="regex-demo-field">
+                <span class="regex-demo-label">Replace With</span>
+                <code>dog</code>
+              </div>
+            </div>
+            <div class="regex-demo-message regex-demo-result">
+              <span class="regex-demo-label">Result</span>
+              <p>The <mark>dog</mark> sat beside another <mark>dog</mark>.</p>
+            </div>
+            <p class="regex-demo-note">The <code>g</code> tells regex to replace every occurrence, rather than just the first.</p>
+          </div>
           <h3>The letters at the end</h3>
-          <p>Use none, one, or several together, in any order: <code>/native/gi</code> is the same as <code>/native/ig</code>.</p>
+          <p>Type what you want to find, like <code>cat</code>. To control how it searches, surround the pattern with slashes and add letters at the end. For example, <code>/cat/g</code> finds every occurrence of “cat” instead of just the first.</p>
+          <p>Use none, one, or several letters together, in any order: <code>/cat/gi</code> is the same as <code>/cat/ig</code>.</p>
           <div class="table-wrap">
             <table class="guide-table table-stack table-flags" role="table" aria-labelledby="table-title-1">
               <caption id="table-title-1" class="sr-only">Letter / What it does / Without it / Example</caption>
