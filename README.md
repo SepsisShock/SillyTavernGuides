@@ -31,14 +31,26 @@ Pick a topic and explore it at your own pace. The guides are written to make unf
       <br><br>
       Learn how SillyTavern regex scripts work, what goes in Find Regex and Replace With, and how the available settings affect your chat.
       <br><br>
-      <a href="./regex.html"><strong>↗ Open Regex Basics</strong></a>
+      <a href="https://sepsisshock.github.io/SillyTavernGuides/regex.html"><strong>↗ Open Regex Basics</strong></a>
     </td>
     <td valign="top">
       <strong>See how your prompt gets packed.</strong>
       <br><br>
       A visual introduction to Prompt Post-Processing (PPP), including how SillyTavern arranges messages before sending them to an API.
       <br><br>
-      <a href="./ppp.html"><strong>↗ Open Prompt Post-Processing</strong></a>
+      <a href="https://sepsisshock.github.io/SillyTavernGuides/ppp.html"><strong>↗ Open Prompt Post-Processing</strong></a>
+    </td>
+  </tr>
+  <tr>
+    <th colspan="2" align="left">03 &nbsp; / &nbsp; TOOL CALLS</th>
+  </tr>
+  <tr>
+    <td colspan="2" valign="top">
+      <strong>When the AI needs a little help.</strong>
+      <br><br>
+      Follow a receptionist-style interactive example to learn how tool calls work, where to enable function calling, and what they can cost.
+      <br><br>
+      <a href="https://sepsisshock.github.io/SillyTavernGuides/tool-calls.html"><strong>↗ Open Tool Calls</strong></a>
     </td>
   </tr>
 </table>
