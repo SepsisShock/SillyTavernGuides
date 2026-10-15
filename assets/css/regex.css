@@ -1,0 +1,143 @@
+/* Regex-specific reference layouts and the demonstrated status styling. */
+#find .guide-table th:first-child {
+  width: 10%;
+}
+
+#find .guide-table th:last-child {
+  width: 31%;
+}
+
+#recipes .guide-table th:first-child {
+  width: 30%;
+}
+
+#recipes .guide-table th:nth-child(2) {
+  width: 43%;
+}
+
+#recipes .guide-table th:last-child {
+  width: 27%;
+}
+
+#changes .guide-table th:nth-child(-n+2) {
+  width: 24%;
+}
+
+#html-css .guide-table th {
+  width: 50%;
+}
+
+.example-status {
+  background: #332335;
+  color: #ffe6f1;
+  border: 1px solid #b77a9a;
+  border-radius: 8px;
+  padding: 12px;
+  margin: 0;
+  max-width: 420px;
+}
+
+.example-status strong {
+  display: block;
+  color: inherit;
+  margin-bottom: 6px;
+}
+
+.example-status p {
+  margin: 2px 0;
+}
+
+@media (max-width: 1050px) {
+  #find .guide-table {
+    font-size: .9rem;
+  }
+}
+
+@media (max-width: 700px) {
+  #find .guide-table {
+    font-size: .97rem;
+  }
+  .table-flags tbody tr {
+    gap: 14px;
+  }
+  .table-flags td:first-child {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #395164;
+  }
+  .table-flags td:first-child .table-label {
+    margin: 0;
+    font-size: .83rem;
+  }
+  .table-flags td:first-child code {
+    display: inline-grid;
+    place-items: center;
+    min-width: 38px;
+    min-height: 38px;
+    padding: 2px 10px;
+    background: #203e4e;
+    color: #b5effa;
+    font-size: 1.15rem;
+    font-weight: 700;
+  }
+  .table-flags td:nth-child(2) .table-label {
+    display: none;
+  }
+  .table-flags td:nth-child(2) .cell-content {
+    color: #edf3f8;
+    font-size: 1rem;
+    line-height: 1.65;
+  }
+  .table-flags td:nth-child(3) {
+    color: #bbcad6;
+    font-size: .9rem;
+  }
+  .table-flags td:nth-child(3) .table-label {
+    color: #c9d7e1;
+  }
+  .table-flags td:last-child {
+    padding-top: 12px;
+    border-top: 1px solid #304858;
+  }
+  .table-flags td:last-child .table-label {
+    color: var(--color-accent);
+  }
+  .table-symbols td:first-child, .table-recipes td:first-child {
+    padding-bottom: 12px;
+    border-bottom: 1px solid #395164;
+  }
+  .table-symbols td:first-child code {
+    font-size: 1rem;
+    color: #e0eff7;
+  }
+  .table-symbols td:nth-child(2) .table-label {
+    color: var(--color-accent);
+  }
+  .table-symbols td:last-child {
+    color: #bdcdd9;
+    font-size: .91rem;
+  }
+  .table-recipes td:first-child .table-label {
+    display: none;
+  }
+  .table-recipes td:first-child .cell-content {
+    font-size: 1.03rem;
+    line-height: 1.5;
+    font-weight: 650;
+    color: #f0f5f8;
+  }
+  .table-recipes td[data-kind] .cell-content {
+    padding: 10px 12px;
+    background: var(--color-code);
+    border-radius: var(--radius-sm);
+  }
+  #changes .table-stack tbody tr {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+  #changes .table-stack tbody td:last-child {
+    grid-column: 1 / -1;
+  }
+}
+
