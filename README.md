@@ -2,6 +2,8 @@
 
 # ✦ SillyTavern Guides
 
+<sub>Established October 2026</sub>
+
 **A little library for making sense of SillyTavern.**
 
 Beginner-friendly explanations, visual walkthroughs, and practical examples for the settings and features that deserve a closer look.
