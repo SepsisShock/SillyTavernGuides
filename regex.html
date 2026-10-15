@@ -1,38 +1,391 @@
-<!DOCTYPE html>
-<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><meta content="A beginner-friendly guide to SillyTavern regexes, settings, examples, and prompt effects." name="description"/><title>Regex Basics | SillyTavern Guide</title><style>
-:root{color-scheme:dark;--bg:#10151c;--surface:#19212b;--line:#344353;--text:#e5eaf2;--muted:#b2c1d1;--accent:#83c9d9;--gold:#e8bd74}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(circle at 80% 0,#233744 0,transparent 500px),var(--bg);color:var(--text);font:16px/1.7 system-ui,-apple-system,Segoe UI,sans-serif}.page{max-width:990px;margin:auto;padding:28px 24px 70px}.hero{padding:50px 0 27px;border-bottom:1px solid var(--line)}.eyebrow{color:var(--accent);font-size:.73rem;font-weight:750;letter-spacing:.17em}h1{font-size:clamp(2.8rem,7vw,4.6rem);line-height:1.12;letter-spacing:-.045em;margin:12px 0}h2{font-size:1.65rem;line-height:1.3;margin:0 0 16px}h3{font-size:1.16rem;margin:26px 0 8px}.lede{color:var(--muted);font-size:1.15rem}.field{display:inline-block;border:1px solid #5ca6b4;color:#98e0e7;border-radius:999px;padding:0 .48em;font-size:.87em;font-weight:700;white-space:normal}nav{padding:20px 0 25px;border-bottom:1px solid var(--line)}nav strong{font-size:.85rem;color:var(--muted)}.navlinks{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}.navlinks a{padding:5px 12px;border:1px solid var(--line);border-radius:30px;text-decoration:none;color:var(--text);font-size:.86rem}a{color:var(--accent)}section{padding-top:40px;scroll-margin-top:10px}p{margin:12px 0}ul{padding-left:24px}li{margin:6px 0}code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;background:#101820;color:#d0e8ef;padding:2px 5px;border-radius:5px;overflow-wrap:anywhere;font-size:.89em}figure{margin:22px 0;padding:12px;border:1px solid var(--line);background:var(--surface);border-radius:14px}figure img{display:block;max-width:100%;height:auto;border-radius:8px}.table-wrap{overflow-x:auto;margin:19px 0;border:1px solid var(--line);border-radius:12px}table{border-collapse:collapse;width:100%;min-width:610px;font-size:.92rem}th{background:#263441;color:#e4f1f3;font-weight:700;text-align:left}td,th{padding:13px 15px;border-bottom:1px solid var(--line);vertical-align:top}tr:last-child td{border-bottom:0}tbody tr:nth-child(even){background:#151e27}aside{border:1px solid #725c38;border-left:4px solid var(--gold);border-radius:9px;background:#30291e;padding:15px 19px;margin:25px 0}aside strong{color:#f1ce91}aside p:last-child{margin-bottom:0}footer{border-top:1px solid var(--line);margin-top:55px;padding-top:24px;font-size:.84rem;color:var(--muted)}@media(max-width:600px){.page{padding:15px 16px 50px}.hero{padding-top:35px}section{padding-top:30px}table{min-width:580px}}
- .example-status{background:#1b2834;color:#fff;border:1px solid #6b9da9;border-radius:8px;padding:12px;margin:18px 0;max-width:420px}.example-status strong{display:block;color:#b5e4eb;margin-bottom:6px}.example-status p{margin:2px 0}.code-example{background:#101820;border:1px solid var(--line);border-radius:10px;padding:15px;overflow-x:auto;line-height:1.6}.code-example code{padding:0;background:transparent;color:#d0e8ef;white-space:pre;font-size:.88rem}mark{background:#e8bd74;color:#171b1f;padding:0 3px;border-radius:2px}</style><style>figure img{display:block;max-width:100%;height:auto;min-height:44px;margin:0 auto;border:1px solid #546071;border-radius:8px}figure figure .image-source a{color:#82cbee}</style><style>
-/* Shared site navigation */
-.st-site-nav{max-width:1040px;margin:0 auto;padding:20px 24px 15px;display:flex;align-items:center;justify-content:space-between;gap:16px;border-bottom:1px solid #344353;font:500 14px/1.5 system-ui,-apple-system,Segoe UI,sans-serif;color:#e5eaf2}
-.st-site-nav a{color:#b2c1d1;text-decoration:none}.st-site-nav a:hover,.st-site-nav summary:hover{color:#83c9d9}
-.st-site-nav .st-brand{color:#83c9d9;font-weight:800;letter-spacing:.12em;font-size:13px}
-.st-site-actions{display:flex;align-items:center;gap:22px}
-.st-site-nav details{position:relative}.st-site-nav summary{list-style:none;cursor:pointer;color:#b2c1d1;user-select:none}.st-site-nav summary::-webkit-details-marker{display:none}.st-site-nav summary:after{content:" ▾";color:#83c9d9}
-.st-site-nav .st-menu{position:absolute;right:0;top:calc(100% + 12px);min-width:220px;padding:8px;background:#19212b;border:1px solid #344353;border-radius:12px;box-shadow:0 12px 32px #0007;z-index:50}
-.st-site-nav .st-menu a{display:block;padding:9px 11px;border-radius:7px}.st-site-nav .st-menu a:hover{background:#283844}.st-site-nav a[aria-current="page"]{color:#83c9d9;font-weight:700}
-@media(max-width:520px){.st-site-nav{padding:16px;gap:8px;flex-wrap:wrap}.st-site-nav .st-brand{font-size:11px}.st-site-actions{gap:15px}}
-</style></head><body><nav class="st-site-nav" aria-label="Site navigation"><a class="st-brand" href="./index.html">ST BEGINNER GUIDES</a><div class="st-site-actions"><details><summary>Guides</summary><div class="st-menu"><a href="./ppp.html">Prompt Post-Processing</a><a href="./regex.html" aria-current="page">Regex Basics</a><a href="./tool-calls.html">Tool Calls</a></div></details></div></nav><main class="page"><header class="hero"><h1>Regex Basics</h1><p class="lede">Find, replace, and control what gets changed in your chats.</p></header><nav aria-label="On this page"><strong>On this page</strong><div class="navlinks"><a href="#find">Find Regex</a><a href="#symbols">Symbols</a><a href="#replace">Replace With</a><a href="#recipes">Recipes</a><a href="#html-css">HTML &amp; CSS</a><a href="#changes">What changes</a><a href="#depth">Affects &amp; depth</a><a href="#other">Other settings</a></div></nav><p>Regexes aren't AI and they don't “think”; they're find-and-replace rules. But they can still change what the AI receives if you tick <span class="field">Alter Outgoing Prompt</span>.</p><p>Paste a recipe into <span class="field">Find Regex</span> and <span class="field">Replace With</span>, then tick what it should affect.</p><section id="find"><h2>What goes in <span class="field">Find Regex</span></h2><figure><img alt="Find Regex box" data-fallback="https://raw.githubusercontent.com/SepsisShock/NTR-Extension/main/assets/regex-help/find-regex.png" decoding="async" loading="lazy" src="https://cdn.jsdelivr.net/gh/SepsisShock/NTR-Extension@main/assets/regex-help/find-regex.png"/></figure><p>Type what you're looking for between two slashes, like <code>/native/</code>. Letters after the last slash change how it searches, like the <code>g</code> in <code>/native/g</code>.</p><h3>The letters at the end</h3><p>Use none, one, or several together, in any order: <code>/native/gi</code> is the same as <code>/native/ig</code>.</p><div class="table-wrap"><table><thead><tr><th>Letter</th><th>What it does</th><th>Without it</th><th>Example</th></tr></thead><tbody><tr><td><code>g</code></td><td>Changes every place it's found</td><td>Only the first one changes</td><td><code>/cat/g</code> changes both cats in “cat and cat”</td></tr><tr><td><code>i</code></td><td>Ignores capitalization</td><td>Capitals must match exactly</td><td><code>/cat/i</code> finds cat, Cat and CAT</td></tr><tr><td><code>m</code></td><td>Treats each line on its own. Needed when a recipe uses <code>^</code> or <code>$</code></td><td><code>^</code> and <code>$</code> only match start and end of whole message</td><td><code>/^Note:/gm</code> finds “Note:” at the start of any line</td></tr><tr><td><code>s</code></td><td>Lets <code>.</code> match across newlines; recipes here use <code>[\s\S]</code> instead</td><td><code>.</code> does not match a newline</td><td>Can find a tag spanning lines</td></tr></tbody></table></div><p>Common combinations:</p><ul><li><code>/word/g</code>: every one, exact capitalization. This is the usual one.</li><li><code>/word/gi</code>: every one, any capitalization.</li><li><code>/word/</code>: first one only, exact capitalization.</li><li><code>/^text/gm</code>: every line that starts with “text”.</li></ul></section><section id="symbols"><h2>Typing symbols</h2><p>Letters, numbers and spaces can be typed as they are. Some symbols have special meanings, so typing them as they are quietly finds something else, or nothing:</p><p><code>. * + ? ( ) [ ] { } | ^ $ \ /</code></p><p>To search for one of them as plain text, put <code>\</code> in front of it.</p><div class="table-wrap"><table><thead><tr><th>You want to find</th><th>Type</th><th>Why</th></tr></thead><tbody><tr><td><code>&lt;word&gt;</code></td><td><code>&lt;word&gt;</code></td><td>Angle brackets are safe as they are</td></tr><tr><td><code>&lt;/word&gt;</code></td><td><code>&lt;\/word&gt;</code></td><td>The slash would end the regex early</td></tr><tr><td><code>Dr. Who</code></td><td><code>Dr\. Who</code></td><td>A dot means any one character</td></tr><tr><td><code>Really?</code></td><td><code>Really\?</code></td><td>Question mark makes the preceding thing optional</td></tr><tr><td><code>*smiles*</code></td><td><code>\*smiles\*</code></td><td>Asterisk repeats the preceding thing</td></tr><tr><td><code>(OOC)</code></td><td><code>\(OOC\)</code></td><td>Parentheses mark a part to reuse in Replace With</td></tr><tr><td><code>[Status]</code></td><td><code>\[Status\]</code></td><td>Square brackets match any one of the characters inside</td></tr><tr><td><code>$5</code></td><td><code>\$5</code></td><td>Dollar sign normally anchors the end of the text</td></tr></tbody></table></div><p>The other symbols work the same way: <code>\+</code> <code>\{</code> <code>\}</code> <code>\|</code> <code>\^</code>. To find a literal backslash use <code>\\</code>.</p></section><section id="replace"><h2>What goes in <span class="field">Replace With</span>?</h2><figure><img alt="Replace With box" data-fallback="https://raw.githubusercontent.com/SepsisShock/NTR-Extension/main/assets/regex-help/replace-with.png" decoding="async" loading="lazy" src="https://cdn.jsdelivr.net/gh/SepsisShock/NTR-Extension@main/assets/regex-help/replace-with.png"/></figure><ul><li>Type it exactly as you want it to appear. Symbols don't need a backslash here; dollar-number placeholders and macros are special.</li><li><code>$1</code> puts back whatever the first capture group <code>()</code> found; <code>$2</code> uses the second. Use only numbered groups you actually created.</li><li><code>{{match}}</code> puts back the entire matched text.</li><li>Macros like <code>{{char}}</code> and <code>{{user}}</code> are filled in.</li><li>In <span class="field">Replace With</span>, <code>$5</code> means “insert capture group 5.” If there is no fifth group, SillyTavern removes it instead of showing the price. To find a literal <code>$5</code> in <span class="field">Find Regex</span>, use <code>\$5</code>; finding a price and inserting one are different things.</li></ul><aside><strong>AI-generated Regex Advice</strong><p>LLMs might suggest standard JavaScript replacement syntax, which doesn't always work in SillyTavern because it handles replacements differently. Don't assume an LLM understands SillyTavern's replacement rules just because it says it does.</p></aside></section><section id="recipes"><h2>Recipes</h2><p>Each recipe has two parts. Put the first in <span class="field">Find Regex</span> and the second in <span class="field">Replace With</span>.</p><div class="table-wrap"><table><thead><tr><th>To do this</th><th>Find Regex</th><th>Replace With</th></tr></thead><tbody><tr><td>Replace a word</td><td><code>/native/g</code></td><td><code>natural</code></td></tr><tr><td>Replace regardless of capitalization</td><td><code>/native/gi</code></td><td><code>natural</code></td></tr><tr><td>Whole word only</td><td><code>/\bnative\b/g</code></td><td><code>natural</code></td></tr><tr><td>Preserve first-letter capitalization</td><td><code>/\b([Nn])ative\b/g</code></td><td><code>$1atural</code></td></tr><tr><td>Remove a tagged block, tags included</td><td><code>/&lt;thinking&gt;[\s\S]*?&lt;\/thinking&gt;/g</code></td><td><em>Leave empty</em></td></tr><tr><td>Remove a tagged block with extra details, like &lt;status mood=&quot;happy&quot;&gt;</td><td><code>/&lt;status\b[^&gt;]*&gt;[\s\S]*?&lt;\/status&gt;/g</code></td><td><em>Leave empty</em></td></tr><tr><td>Keep inside text, remove tags</td><td><code>/&lt;b&gt;([\s\S]*?)&lt;\/b&gt;/g</code></td><td><code>$1</code></td></tr><tr><td>Remove a line containing specific text</td><td><code>/^.*Word count:.*$\n?/gm</code></td><td><em>Leave empty</em></td></tr><tr><td>Wrap a name in bold</td><td><code>/\bJohn\b/g</code></td><td><code>**{{match}}**</code></td></tr></tbody></table></div><ul><li><code>[\s\S]*?</code> means any text, including across lines, stopping at the first possible closing tag.</li><li>Preserving capitalization only works for the two cases shown. For uppercase NATIVE, add a second regex: <code>/\bNATIVE\b/g</code> → <code>NATURAL</code>.</li><li>Whole-word matching using <code>\b</code> can have problems with letters such as é.</li></ul></section><section id="html-css"><h2>HTML &amp; CSS Basics</h2><p>HTML and CSS let you customize how text appears in SillyTavern, from simple formatting like bold and italics to styled boxes.</p><p>For example, <code>&lt;strong&gt;John&lt;/strong&gt;</code> makes John <strong>bold</strong>, but only where that HTML is written. You can use regex to automatically apply the same formatting to every occurrence of John.</p><div class="table-wrap"><table><thead><tr><th>Find Regex</th><th>Replace With</th></tr></thead><tbody><tr><td><code>/\bJohn\b/g</code></td><td><code>&lt;strong&gt;{{match}}&lt;/strong&gt;</code></td></tr></tbody></table></div><p>The <code>\b</code> means <em>whole word only</em>, so John gets formatted without affecting Johnson or Johnny. The <code>&lt;strong&gt;</code> tags make the matched text bold.</p><h3>Common HTML formatting</h3><p>HTML uses tags to tell the browser how to display content. Most formatting tags have an opening and closing tag, such as <code>&lt;em&gt;</code> and <code>&lt;/em&gt;</code>.</p><div class="table-wrap"><table><thead><tr><th>HTML</th><th>Result</th></tr></thead><tbody><tr><td><code>&lt;strong&gt;Bold&lt;/strong&gt;</code></td><td><strong>Bold</strong></td></tr><tr><td><code>&lt;em&gt;Italic&lt;/em&gt;</code></td><td><em>Italic</em></td></tr><tr><td><code>&lt;u&gt;Underline&lt;/u&gt;</code></td><td><u>Underline</u></td></tr><tr><td><code>&lt;s&gt;Strikethrough&lt;/s&gt;</code></td><td><s>Strikethrough</s></td></tr><tr><td><code>&lt;mark&gt;Highlight&lt;/mark&gt;</code></td><td><mark>Highlight</mark></td></tr><tr><td><code>&lt;span&gt;Text&lt;/span&gt;</code></td><td>Text, which can be styled with CSS</td></tr></tbody></table></div><h3>HTML &amp; CSS together</h3><p>Suppose the AI writes:</p><pre class="code-example"><code>&lt;char_stats&gt;
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <meta content="A beginner-friendly guide to SillyTavern regexes, settings, examples, and prompt effects." name="description">
+    <title>Regex Basics | SillyTavern Guide</title>
+    <link rel="stylesheet" href="./assets/css/guides.css">
+    <link rel="stylesheet" href="./assets/css/regex.css">
+    <script src="./assets/js/guides.js" defer></script>
+  </head>
+  <body class="guide">
+    <a class="skip-link" href="#main-content">Skip to guide</a>
+    <nav class="st-site-nav" aria-label="Site navigation">
+      <a class="st-brand" href="./index.html">ST BEGINNER GUIDES</a>
+      <div class="st-site-actions">
+        <details>
+          <summary>Guides</summary>
+          <div class="st-menu"><a href="./ppp.html">Prompt Post-Processing</a><a href="./regex.html" aria-current="page">Regex Basics</a><a href="./tool-calls.html">Tool Calls</a></div>
+        </details>
+      </div>
+    </nav>
+    <main id="main-content" class="guide-shell" tabindex="-1">
+      <header class="guide-hero" id="top">
+        <div class="eyebrow">SILLYTAVERN • BEGINNER GUIDE</div>
+        <h1>Regex Basics</h1>
+        <p class="lede">Find, replace, and control what gets changed in your chats.</p>
+      </header>
+      <nav class="guide-toc" aria-label="On this page">
+        <details class="toc-panel" open>
+          <summary class="toc-summary">On this page</summary>
+          <div class="toc-links" id="contents-links"><a href="#find">Find Regex</a><a href="#symbols">Symbols</a><a href="#replace">Replace With</a><a href="#recipes">Recipes</a><a href="#html-css">HTML &amp; CSS</a><a href="#changes">What It Changes</a><a href="#depth">Affect and Depth</a><a href="#other">Other Settings</a></div>
+        </details>
+        <a href="#top" class="back-to-top">Back to top <span aria-hidden="true">↑</span></a>
+      </nav>
+      <div class="guide-article">
+        <p>Regexes aren't AI and they don't “think”; they're find-and-replace rules. But they can still change what the AI receives if you tick <span class="field">Alter Outgoing Prompt</span>.</p>
+        <p>Paste a recipe into <span class="field">Find Regex</span> and <span class="field">Replace With</span>, then tick what it should affect.</p>
+        <section id="find" class="guide-section">
+          <h2>What goes in <span class="field">Find Regex</span></h2>
+          <figure class="screenshot"><img alt="Find Regex box" data-fallback="https://raw.githubusercontent.com/SepsisShock/NTR-Extension/main/assets/regex-help/find-regex.png" decoding="async" loading="lazy" src="https://cdn.jsdelivr.net/gh/SepsisShock/NTR-Extension@main/assets/regex-help/find-regex.png"></figure>
+          <p>Type what you're looking for between two slashes, like <code>/native/</code>. Letters after the last slash change how it searches, like the <code>g</code> in <code>/native/g</code>.</p>
+          <h3>The letters at the end</h3>
+          <p>Use none, one, or several together, in any order: <code>/native/gi</code> is the same as <code>/native/ig</code>.</p>
+          <div class="table-wrap">
+            <table class="guide-table table-stack table-flags" role="table" aria-labelledby="table-title-1">
+              <caption id="table-title-1" class="sr-only">Letter / What it does / Without it / Example</caption>
+              <thead role="rowgroup">
+                <tr role="row">
+                  <th scope="col" role="columnheader" id="t1-c0">Letter</th>
+                  <th scope="col" role="columnheader" id="t1-c1">What it does</th>
+                  <th scope="col" role="columnheader" id="t1-c2">Without it</th>
+                  <th scope="col" role="columnheader" id="t1-c3">Example</th>
+                </tr>
+              </thead>
+              <tbody role="rowgroup">
+                <tr role="row">
+                  <td role="cell" headers="t1-c0"><span class="table-label" aria-hidden="true">Letter</span><span class="cell-content"><code>g</code></span></td>
+                  <td role="cell" headers="t1-c1"><span class="table-label" aria-hidden="true">What it does</span><span class="cell-content">Changes every place it's found</span></td>
+                  <td role="cell" headers="t1-c2"><span class="table-label" aria-hidden="true">Without it</span><span class="cell-content">Only the first one changes</span></td>
+                  <td role="cell" headers="t1-c3"><span class="table-label" aria-hidden="true">Example</span><span class="cell-content"><code>/cat/g</code> changes both cats in “cat and cat”</span></td>
+                </tr>
+                <tr role="row">
+                  <td role="cell" headers="t1-c0"><span class="table-label" aria-hidden="true">Letter</span><span class="cell-content"><code>i</code></span></td>
+                  <td role="cell" headers="t1-c1"><span class="table-label" aria-hidden="true">What it does</span><span class="cell-content">Ignores capitalization</span></td>
+                  <td role="cell" headers="t1-c2"><span class="table-label" aria-hidden="true">Without it</span><span class="cell-content">Capitals must match exactly</span></td>
+                  <td role="cell" headers="t1-c3"><span class="table-label" aria-hidden="true">Example</span><span class="cell-content"><code>/cat/i</code> finds cat, Cat and CAT</span></td>
+                </tr>
+                <tr role="row">
+                  <td role="cell" headers="t1-c0"><span class="table-label" aria-hidden="true">Letter</span><span class="cell-content"><code>m</code></span></td>
+                  <td role="cell" headers="t1-c1"><span class="table-label" aria-hidden="true">What it does</span><span class="cell-content">Treats each line on its own. Needed when a recipe uses <code>^</code> or <code>$</code></span></td>
+                  <td role="cell" headers="t1-c2"><span class="table-label" aria-hidden="true">Without it</span><span class="cell-content"><code>^</code> and <code>$</code> only match start and end of whole message</span></td>
+                  <td role="cell" headers="t1-c3"><span class="table-label" aria-hidden="true">Example</span><span class="cell-content"><code>/^Note:/gm</code> finds “Note:” at the start of any line</span></td>
+                </tr>
+                <tr role="row">
+                  <td role="cell" headers="t1-c0"><span class="table-label" aria-hidden="true">Letter</span><span class="cell-content"><code>s</code></span></td>
+                  <td role="cell" headers="t1-c1"><span class="table-label" aria-hidden="true">What it does</span><span class="cell-content">Lets <code>.</code> match across newlines; recipes here use <code>[\s\S]</code> instead</span></td>
+                  <td role="cell" headers="t1-c2"><span class="table-label" aria-hidden="true">Without it</span><span class="cell-content"><code>.</code> does not match a newline</span></td>
+                  <td role="cell" headers="t1-c3"><span class="table-label" aria-hidden="true">Example</span><span class="cell-content">Can find a tag spanning lines</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p>Common combinations:</p>
+          <ul>
+            <li><code>/word/g</code>: every one, exact capitalization. This is the usual one.</li>
+            <li><code>/word/gi</code>: every one, any capitalization.</li>
+            <li><code>/word/</code>: first one only, exact capitalization.</li>
+            <li><code>/^text/gm</code>: every line that starts with “text”.</li>
+          </ul>
+        </section>
+        <section id="symbols" class="guide-section">
+          <h2>Typing symbols</h2>
+          <p>Letters, numbers and spaces can be typed as they are. Some symbols have special meanings, so typing them as they are quietly finds something else, or nothing:</p>
+          <p><code>. * + ? ( ) [ ] { } | ^ $ \ /</code></p>
+          <p>To search for one of them as plain text, put <code>\</code> in front of it.</p>
+          <div class="table-wrap">
+            <table class="guide-table table-stack table-symbols" role="table" aria-labelledby="table-title-2">
+              <caption id="table-title-2" class="sr-only">You want to find / Type / Why</caption>
+              <thead role="rowgroup">
+                <tr role="row">
+                  <th scope="col" role="columnheader" id="t2-c0">You want to find</th>
+                  <th scope="col" role="columnheader" id="t2-c1">Type</th>
+                  <th scope="col" role="columnheader" id="t2-c2">Why</th>
+                </tr>
+              </thead>
+              <tbody role="rowgroup">
+                <tr role="row">
+                  <td role="cell" headers="t2-c0"><span class="table-label" aria-hidden="true">You want to find</span><span class="cell-content"><code>&lt;word&gt;</code></span></td>
+                  <td role="cell" headers="t2-c1"><span class="table-label" aria-hidden="true">Type</span><span class="cell-content"><code>&lt;word&gt;</code></span></td>
+                  <td role="cell" headers="t2-c2"><span class="table-label" aria-hidden="true">Why</span><span class="cell-content">Angle brackets are safe as they are</span></td>
+                </tr>
+                <tr role="row">
+                  <td role="cell" headers="t2-c0"><span class="table-label" aria-hidden="true">You want to find</span><span class="cell-content"><code>&lt;/word&gt;</code></span></td>
+                  <td role="cell" headers="t2-c1"><span class="table-label" aria-hidden="true">Type</span><span class="cell-content"><code>&lt;\/word&gt;</code></span></td>
+                  <td role="cell" headers="t2-c2"><span class="table-label" aria-hidden="true">Why</span><span class="cell-content">The slash would end the regex early</span></td>
+                </tr>
+                <tr role="row">
+                  <td role="cell" headers="t2-c0"><span class="table-label" aria-hidden="true">You want to find</span><span class="cell-content"><code>Dr. Who</code></span></td>
+                  <td role="cell" headers="t2-c1"><span class="table-label" aria-hidden="true">Type</span><span class="cell-content"><code>Dr\. Who</code></span></td>
+                  <td role="cell" headers="t2-c2"><span class="table-label" aria-hidden="true">Why</span><span class="cell-content">A dot means any one character</span></td>
+                </tr>
+                <tr role="row">
+                  <td role="cell" headers="t2-c0"><span class="table-label" aria-hidden="true">You want to find</span><span class="cell-content"><code>Really?</code></span></td>
+                  <td role="cell" headers="t2-c1"><span class="table-label" aria-hidden="true">Type</span><span class="cell-content"><code>Really\?</code></span></td>
+                  <td role="cell" headers="t2-c2"><span class="table-label" aria-hidden="true">Why</span><span class="cell-content">Question mark makes the preceding thing optional</span></td>
+                </tr>
+                <tr role="row">
+                  <td role="cell" headers="t2-c0"><span class="table-label" aria-hidden="true">You want to find</span><span class="cell-content"><code>*smiles*</code></span></td>
+                  <td role="cell" headers="t2-c1"><span class="table-label" aria-hidden="true">Type</span><span class="cell-content"><code>\*smiles\*</code></span></td>
+                  <td role="cell" headers="t2-c2"><span class="table-label" aria-hidden="true">Why</span><span class="cell-content">Asterisk repeats the preceding thing</span></td>
+                </tr>
+                <tr role="row">
+                  <td role="cell" headers="t2-c0"><span class="table-label" aria-hidden="true">You want to find</span><span class="cell-content"><code>(OOC)</code></span></td>
+                  <td role="cell" headers="t2-c1"><span class="table-label" aria-hidden="true">Type</span><span class="cell-content"><code>\(OOC\)</code></span></td>
+                  <td role="cell" headers="t2-c2"><span class="table-label" aria-hidden="true">Why</span><span class="cell-content">Parentheses mark a part to reuse in Replace With</span></td>
+                </tr>
+                <tr role="row">
+                  <td role="cell" headers="t2-c0"><span class="table-label" aria-hidden="true">You want to find</span><span class="cell-content"><code>[Status]</code></span></td>
+                  <td role="cell" headers="t2-c1"><span class="table-label" aria-hidden="true">Type</span><span class="cell-content"><code>\[Status\]</code></span></td>
+                  <td role="cell" headers="t2-c2"><span class="table-label" aria-hidden="true">Why</span><span class="cell-content">Square brackets match any one of the characters inside</span></td>
+                </tr>
+                <tr role="row">
+                  <td role="cell" headers="t2-c0"><span class="table-label" aria-hidden="true">You want to find</span><span class="cell-content"><code>$5</code></span></td>
+                  <td role="cell" headers="t2-c1"><span class="table-label" aria-hidden="true">Type</span><span class="cell-content"><code>\$5</code></span></td>
+                  <td role="cell" headers="t2-c2"><span class="table-label" aria-hidden="true">Why</span><span class="cell-content">Dollar sign normally anchors the end of the text</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p>The other symbols work the same way: <code>\+</code> <code>\{</code> <code>\}</code> <code>\|</code> <code>\^</code>. To find a literal backslash use <code>\\</code>.</p>
+        </section>
+        <section id="replace" class="guide-section">
+          <h2>What goes in <span class="field">Replace With</span>?</h2>
+          <figure class="screenshot"><img alt="Replace With box" data-fallback="https://raw.githubusercontent.com/SepsisShock/NTR-Extension/main/assets/regex-help/replace-with.png" decoding="async" loading="lazy" src="https://cdn.jsdelivr.net/gh/SepsisShock/NTR-Extension@main/assets/regex-help/replace-with.png"></figure>
+          <ul>
+            <li>Type it exactly as you want it to appear. Symbols don't need a backslash here; dollar-number placeholders and macros are special.</li>
+            <li><code>$1</code> puts back whatever the first capture group <code>()</code> found; <code>$2</code> uses the second. Use only numbered groups you actually created.</li>
+            <li><code>{{match}}</code> puts back the entire matched text.</li>
+            <li>Macros like <code>{{char}}</code> and <code>{{user}}</code> are filled in.</li>
+            <li>In <span class="field">Replace With</span>, <code>$5</code> means “insert capture group 5.” If there is no fifth group, SillyTavern removes it instead of showing the price. To find a literal <code>$5</code> in <span class="field">Find Regex</span>, use <code>\$5</code>; finding a price and inserting one are different things.</li>
+          </ul>
+          <aside class="notice notice-warning"><strong>AI-generated Regex Advice</strong><p>LLMs might suggest standard JavaScript replacement syntax, which doesn't always work in SillyTavern because it handles replacements differently. Don't assume an LLM understands SillyTavern's replacement rules just because it says it does.</p></aside>
+        </section>
+        <section id="recipes" class="guide-section">
+          <h2>Recipes</h2>
+          <p>Each recipe has two parts. Put the first in <span class="field">Find Regex</span> and the second in <span class="field">Replace With</span>.</p>
+          <div class="table-wrap">
+            <table class="guide-table table-stack table-recipes" role="table" aria-labelledby="table-title-3">
+              <caption id="table-title-3" class="sr-only">To do this / Find Regex / Replace With</caption>
+              <thead role="rowgroup">
+                <tr role="row">
+                  <th scope="col" role="columnheader" id="t3-c0">To do this</th>
+                  <th scope="col" role="columnheader" id="t3-c1" data-kind="find">Find Regex</th>
+                  <th scope="col" role="columnheader" id="t3-c2" data-kind="replace">Replace With</th>
+                </tr>
+              </thead>
+              <tbody role="rowgroup">
+                <tr role="row">
+                  <td role="cell" headers="t3-c0"><span class="table-label" aria-hidden="true">To do this</span><span class="cell-content">Replace a word</span></td>
+                  <td role="cell" headers="t3-c1" data-kind="find"><span class="table-label" aria-hidden="true">Find Regex</span><span class="cell-content"><code data-copy="Find Regex">/native/g</code></span></td>
+                  <td role="cell" headers="t3-c2" data-kind="replace"><span class="table-label" aria-hidden="true">Replace With</span><span class="cell-content"><code data-copy="Replace With">natural</code></span></td>
+                </tr>
+                <tr role="row">
+                  <td role="cell" headers="t3-c0"><span class="table-label" aria-hidden="true">To do this</span><span class="cell-content">Replace regardless of capitalization</span></td>
+                  <td role="cell" headers="t3-c1" data-kind="find"><span class="table-label" aria-hidden="true">Find Regex</span><span class="cell-content"><code data-copy="Find Regex">/native/gi</code></span></td>
+                  <td role="cell" headers="t3-c2" data-kind="replace"><span class="table-label" aria-hidden="true">Replace With</span><span class="cell-content"><code data-copy="Replace With">natural</code></span></td>
+                </tr>
+                <tr role="row">
+                  <td role="cell" headers="t3-c0"><span class="table-label" aria-hidden="true">To do this</span><span class="cell-content">Whole word only</span></td>
+                  <td role="cell" headers="t3-c1" data-kind="find"><span class="table-label" aria-hidden="true">Find Regex</span><span class="cell-content"><code data-copy="Find Regex">/\bnative\b/g</code></span></td>
+                  <td role="cell" headers="t3-c2" data-kind="replace"><span class="table-label" aria-hidden="true">Replace With</span><span class="cell-content"><code data-copy="Replace With">natural</code></span></td>
+                </tr>
+                <tr role="row">
+                  <td role="cell" headers="t3-c0"><span class="table-label" aria-hidden="true">To do this</span><span class="cell-content">Preserve first-letter capitalization</span></td>
+                  <td role="cell" headers="t3-c1" data-kind="find"><span class="table-label" aria-hidden="true">Find Regex</span><span class="cell-content"><code data-copy="Find Regex">/\b([Nn])ative\b/g</code></span></td>
+                  <td role="cell" headers="t3-c2" data-kind="replace"><span class="table-label" aria-hidden="true">Replace With</span><span class="cell-content"><code data-copy="Replace With">$1atural</code></span></td>
+                </tr>
+                <tr role="row">
+                  <td role="cell" headers="t3-c0"><span class="table-label" aria-hidden="true">To do this</span><span class="cell-content">Remove a tagged block, tags included</span></td>
+                  <td role="cell" headers="t3-c1" data-kind="find"><span class="table-label" aria-hidden="true">Find Regex</span><span class="cell-content"><code data-copy="Find Regex">/&lt;thinking&gt;[\s\S]*?&lt;\/thinking&gt;/g</code></span></td>
+                  <td role="cell" headers="t3-c2" data-kind="replace"><span class="table-label" aria-hidden="true">Replace With</span><span class="cell-content"><em>Leave empty</em></span></td>
+                </tr>
+                <tr role="row">
+                  <td role="cell" headers="t3-c0"><span class="table-label" aria-hidden="true">To do this</span><span class="cell-content">Remove a tagged block with extra details, like &lt;status mood="happy"&gt;</span></td>
+                  <td role="cell" headers="t3-c1" data-kind="find"><span class="table-label" aria-hidden="true">Find Regex</span><span class="cell-content"><code data-copy="Find Regex">/&lt;status\b[^&gt;]*&gt;[\s\S]*?&lt;\/status&gt;/g</code></span></td>
+                  <td role="cell" headers="t3-c2" data-kind="replace"><span class="table-label" aria-hidden="true">Replace With</span><span class="cell-content"><em>Leave empty</em></span></td>
+                </tr>
+                <tr role="row">
+                  <td role="cell" headers="t3-c0"><span class="table-label" aria-hidden="true">To do this</span><span class="cell-content">Keep inside text, remove tags</span></td>
+                  <td role="cell" headers="t3-c1" data-kind="find"><span class="table-label" aria-hidden="true">Find Regex</span><span class="cell-content"><code data-copy="Find Regex">/&lt;b&gt;([\s\S]*?)&lt;\/b&gt;/g</code></span></td>
+                  <td role="cell" headers="t3-c2" data-kind="replace"><span class="table-label" aria-hidden="true">Replace With</span><span class="cell-content"><code data-copy="Replace With">$1</code></span></td>
+                </tr>
+                <tr role="row">
+                  <td role="cell" headers="t3-c0"><span class="table-label" aria-hidden="true">To do this</span><span class="cell-content">Remove a line containing specific text</span></td>
+                  <td role="cell" headers="t3-c1" data-kind="find"><span class="table-label" aria-hidden="true">Find Regex</span><span class="cell-content"><code data-copy="Find Regex">/^.*Word count:.*$\n?/gm</code></span></td>
+                  <td role="cell" headers="t3-c2" data-kind="replace"><span class="table-label" aria-hidden="true">Replace With</span><span class="cell-content"><em>Leave empty</em></span></td>
+                </tr>
+                <tr role="row">
+                  <td role="cell" headers="t3-c0"><span class="table-label" aria-hidden="true">To do this</span><span class="cell-content">Wrap a name in bold</span></td>
+                  <td role="cell" headers="t3-c1" data-kind="find"><span class="table-label" aria-hidden="true">Find Regex</span><span class="cell-content"><code data-copy="Find Regex">/\bJohn\b/g</code></span></td>
+                  <td role="cell" headers="t3-c2" data-kind="replace"><span class="table-label" aria-hidden="true">Replace With</span><span class="cell-content"><code data-copy="Replace With">**{{match}}**</code></span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <ul>
+            <li><code>[\s\S]*?</code> means any text, including across lines, stopping at the first possible closing tag.</li>
+            <li>Preserving capitalization only works for the two cases shown. For uppercase NATIVE, add a second regex: <code>/\bNATIVE\b/g</code> → <code>NATURAL</code>.</li>
+            <li>Whole-word matching using <code>\b</code> can have problems with letters such as é.</li>
+          </ul>
+        </section>
+        <section id="html-css" class="guide-section">
+          <h2>HTML &amp; CSS Basics</h2>
+          <p>HTML and CSS let you customize how text appears in SillyTavern, from simple formatting like bold and italics to styled boxes.</p>
+          <p>For example, <code>&lt;strong&gt;John&lt;/strong&gt;</code> makes John <strong>bold</strong>, but only where that HTML is written. You can use regex to automatically apply the same formatting to every occurrence of John.</p>
+          <div class="table-wrap">
+            <table class="guide-table table-stack" role="table" aria-labelledby="table-title-4">
+              <caption id="table-title-4" class="sr-only">Find Regex / Replace With</caption>
+              <thead role="rowgroup">
+                <tr role="row">
+                  <th scope="col" role="columnheader" id="t4-c0" data-kind="find">Find Regex</th>
+                  <th scope="col" role="columnheader" id="t4-c1" data-kind="replace">Replace With</th>
+                </tr>
+              </thead>
+              <tbody role="rowgroup">
+                <tr role="row">
+                  <td role="cell" headers="t4-c0" data-kind="find"><span class="table-label" aria-hidden="true">Find Regex</span><span class="cell-content"><code data-copy="Find Regex">/\bJohn\b/g</code></span></td>
+                  <td role="cell" headers="t4-c1" data-kind="replace"><span class="table-label" aria-hidden="true">Replace With</span><span class="cell-content"><code data-copy="Replace With">&lt;strong&gt;{{match}}&lt;/strong&gt;</code></span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p>The <code>\b</code> means <em>whole word only</em>, so John gets formatted without affecting Johnson or Johnny. The <code>&lt;strong&gt;</code> tags make the matched text bold.</p>
+          <h3>Common HTML formatting</h3>
+          <p>HTML uses tags to tell the browser how to display content. Most formatting tags have an opening and closing tag, such as <code>&lt;em&gt;</code> and <code>&lt;/em&gt;</code>.</p>
+          <div class="table-wrap">
+            <table class="guide-table table-stack" role="table" aria-labelledby="table-title-5">
+              <caption id="table-title-5" class="sr-only">HTML / Result</caption>
+              <thead role="rowgroup">
+                <tr role="row">
+                  <th scope="col" role="columnheader" id="t5-c0" data-kind="source">HTML</th>
+                  <th scope="col" role="columnheader" id="t5-c1" data-kind="result">Result</th>
+                </tr>
+              </thead>
+              <tbody role="rowgroup">
+                <tr role="row">
+                  <td role="cell" headers="t5-c0" data-kind="source"><span class="table-label" aria-hidden="true">HTML</span><span class="cell-content"><code data-copy="HTML">&lt;strong&gt;Bold&lt;/strong&gt;</code></span></td>
+                  <td role="cell" headers="t5-c1" data-kind="result"><span class="table-label" aria-hidden="true">Result</span><span class="cell-content"><strong>Bold</strong></span></td>
+                </tr>
+                <tr role="row">
+                  <td role="cell" headers="t5-c0" data-kind="source"><span class="table-label" aria-hidden="true">HTML</span><span class="cell-content"><code data-copy="HTML">&lt;em&gt;Italic&lt;/em&gt;</code></span></td>
+                  <td role="cell" headers="t5-c1" data-kind="result"><span class="table-label" aria-hidden="true">Result</span><span class="cell-content"><em>Italic</em></span></td>
+                </tr>
+                <tr role="row">
+                  <td role="cell" headers="t5-c0" data-kind="source"><span class="table-label" aria-hidden="true">HTML</span><span class="cell-content"><code data-copy="HTML">&lt;u&gt;Underline&lt;/u&gt;</code></span></td>
+                  <td role="cell" headers="t5-c1" data-kind="result"><span class="table-label" aria-hidden="true">Result</span><span class="cell-content"><u>Underline</u></span></td>
+                </tr>
+                <tr role="row">
+                  <td role="cell" headers="t5-c0" data-kind="source"><span class="table-label" aria-hidden="true">HTML</span><span class="cell-content"><code data-copy="HTML">&lt;s&gt;Strikethrough&lt;/s&gt;</code></span></td>
+                  <td role="cell" headers="t5-c1" data-kind="result"><span class="table-label" aria-hidden="true">Result</span><span class="cell-content"><s>Strikethrough</s></span></td>
+                </tr>
+                <tr role="row">
+                  <td role="cell" headers="t5-c0" data-kind="source"><span class="table-label" aria-hidden="true">HTML</span><span class="cell-content"><code data-copy="HTML">&lt;mark&gt;Highlight&lt;/mark&gt;</code></span></td>
+                  <td role="cell" headers="t5-c1" data-kind="result"><span class="table-label" aria-hidden="true">Result</span><span class="cell-content"><mark>Highlight</mark></span></td>
+                </tr>
+                <tr role="row">
+                  <td role="cell" headers="t5-c0" data-kind="source"><span class="table-label" aria-hidden="true">HTML</span><span class="cell-content"><code data-copy="HTML">&lt;span&gt;Text&lt;/span&gt;</code></span></td>
+                  <td role="cell" headers="t5-c1" data-kind="result"><span class="table-label" aria-hidden="true">Result</span><span class="cell-content">Text, which can be styled with CSS</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <h3>HTML &amp; CSS together</h3>
+          <div class="example-comparison" aria-label="Original text and formatted result">
+            <div class="comparison-source"><p>Suppose the AI writes:</p><pre class="code-block" aria-label="Original tagged text" tabindex="0"><code>&lt;char_stats&gt;
 Health: 80/100
 Mood: Curious
-&lt;/char_stats&gt;</code></pre><p>You can use regex to turn that tagged text into a styled box.</p><p><strong>Find Regex</strong></p><pre class="code-example"><code>/&lt;char_stats&gt;([\s\S]*?)&lt;\/char_stats&gt;/g</code></pre><p><strong>Replace With</strong></p><pre class="code-example"><code>&lt;div style=&quot;background: #1b2834;
-            color: #ffffff;
-            border: 1px solid #6b9da9;
+&lt;/char_stats&gt;</code></pre></div>
+            <div class="comparison-result">
+              <p><strong>Result</strong></p>
+              <div class="example-status"><strong>Character Status</strong><p>Health: 80/100</p><p>Mood: Curious</p></div>
+            </div>
+          </div>
+          <p>You can use regex to turn that tagged text into a styled box.</p>
+          <div class="example-fields">
+            <div class="example-field" data-kind="find"><p><strong>Find Regex</strong></p><pre class="code-block" aria-label="Find Regex example" tabindex="0"><code data-copy="Find Regex">/&lt;char_stats&gt;([\s\S]*?)&lt;\/char_stats&gt;/g</code></pre></div>
+            <div class="example-field" data-kind="replace"><p><strong>Replace With</strong></p><pre class="code-block" aria-label="Replace With example" tabindex="0"><code data-copy="Replace With">&lt;div style="background: #332335;
+            color: #ffe6f1;
+            border: 1px solid #b77a9a;
             border-radius: 8px;
-            padding: 12px;&quot;&gt;
+            padding: 12px;"&gt;
   &lt;strong&gt;Character Status&lt;/strong&gt;
-  &lt;p style=&quot;white-space: pre-line;&quot;&gt;$1&lt;/p&gt;
-&lt;/div&gt;</code></pre><p>The <code>&lt;div&gt;</code> creates the box, while <code>style</code> controls its colors, border, rounded corners, and spacing. <code>$1</code> inserts the text captured between the <code>&lt;char_stats&gt;</code> tags, and <code>white-space: pre-line</code> preserves its line breaks.</p><p><strong>Result</strong></p><div class="example-status"><strong>Character Status</strong><p>Health: 80/100</p><p>Mood: Curious</p></div></section><section id="changes"><h2>What it changes</h2><figure><img alt="Other Options, Macros in Find Regex and Ephemerality" data-fallback="https://raw.githubusercontent.com/SepsisShock/NTR-Extension/main/assets/regex-help/ephemerality.png" decoding="async" loading="lazy" src="https://cdn.jsdelivr.net/gh/SepsisShock/NTR-Extension@main/assets/regex-help/ephemerality.png"/></figure><p>The two <span class="field">Ephemerality</span> boxes decide what gets changed:</p><div class="table-wrap"><table><thead><tr><th>Alter Chat Display</th><th>Alter Outgoing Prompt</th><th>Result</th></tr></thead><tbody><tr><td>Off</td><td>Off</td><td>Changes the saved message permanently. New messages are affected when they arrive, and edited ones when Run On Edit is enabled.</td></tr><tr><td>On</td><td>Off</td><td>Changes what you see. The saved message and AI prompt stay the same.</td></tr><tr><td>Off</td><td>On</td><td>Changes what the AI receives. The display and saved message stay the same.</td></tr><tr><td>On</td><td>On</td><td>Changes the display and AI prompt, but not the saved message.</td></tr></tbody></table></div><aside><strong>Visual regexes: tick only Alter Chat Display</strong><p>For regexes that add HTML, images or colors, untick <span class="field">Alter Outgoing Prompt</span>. Otherwise the AI also receives the formatting code, wasting tokens and possibly affecting its responses. Leaving both unticked saves that code into the message itself.</p></aside></section><section id="depth"><h2>Affects and depth</h2><figure><img alt="Affects and Min/Max Depth" data-fallback="https://raw.githubusercontent.com/SepsisShock/NTR-Extension/main/assets/regex-help/affects-depth.png" decoding="async" loading="lazy" src="https://cdn.jsdelivr.net/gh/SepsisShock/NTR-Extension@main/assets/regex-help/affects-depth.png"/></figure><ul><li><span class="field">Affects</span>: which kinds of text it runs on (AI Output, User Input, Slash Commands, World Info, Reasoning).</li><li><span class="field">Min Depth</span>: skip a number of recent messages, then apply to older messages.</li><li><span class="field">Max Depth</span>: apply to the newest message and up to the selected depth.</li><li>Leave a depth box empty (Unlimited) for no limit.</li></ul><aside><strong>Min Depth / Max Depth might affect prompt caching</strong><p>Some APIs reuse the unchanged beginning of your prompt at a discount. If a regex changes an older message each turn, everything from that message on may be sent at full price.</p><ul><li>Small depth ranges often limit the impact.</li><li>For Claude, compare your chosen depth against your configured <code>cachingAtDepth</code>.</li><li>Unlimited depth is generally more stable for caching when replacements and macros produce the same output each turn.</li></ul></aside></section><section id="other"><h2>Other settings</h2><figure><img alt="Trim Out box" data-fallback="https://raw.githubusercontent.com/SepsisShock/NTR-Extension/main/assets/regex-help/trim-out.png" decoding="async" loading="lazy" src="https://cdn.jsdelivr.net/gh/SepsisShock/NTR-Extension@main/assets/regex-help/trim-out.png"/></figure><ul><li><span class="field">Trim Out</span>: words removed from the found text before <code>$1</code> or <code>{{match}}</code> puts it back. Usually left empty.</li><li><span class="field">Macros in Find Regex</span>: <ul><li>Don't substitute: looks for the literal letters <code>{{char}}</code>.</li><li>Substitute (raw): looks for the character's name instead.</li><li>Substitute (escaped): likewise, but escapes regex symbols in the name, such as the dot in “Dr. Who”.</li></ul></li></ul></section><footer>Adapted from the <a href="https://github.com/SepsisShock/NTR-Extension/blob/main/regex.js">NTR-Extension Regex Basics guide</a>. Screenshots are loaded from the original repository. <a href="https://docs.sillytavern.app/">Official SillyTavern Docs</a>.<div style="margin-top:12px">SepsisShock · October 2026</div></footer></main><script>document.querySelectorAll("img[data-fallback]").forEach(img=>{let failed=false;img.addEventListener("error",()=>{if(!failed){failed=true;img.src=img.dataset.fallback}else{img.alt+=" (image could not load)"}})});</script><script>
-document.addEventListener('pointerdown',event=>{
-  document.querySelectorAll('.st-site-nav details[open]').forEach(menu=>{
-    if(!menu.contains(event.target)) menu.open=false;
-  });
-});
-document.addEventListener('keydown',event=>{
-  if(event.key==='Escape'){
-    document.querySelectorAll('.st-site-nav details[open]').forEach(menu=>{
-      menu.open=false;
-      menu.querySelector('summary')?.focus();
-    });
-  }
-});
-</script></body></html>
+  &lt;p style="white-space: pre-line;"&gt;$1&lt;/p&gt;
+&lt;/div&gt;</code></pre></div>
+          </div>
+          <p>The <code>&lt;div&gt;</code> creates the box, while <code>style</code> controls its colors, border, rounded corners, and spacing. <code>$1</code> inserts the text captured between the <code>&lt;char_stats&gt;</code> tags, and <code>white-space: pre-line</code> preserves its line breaks.</p>
+        </section>
+        <section id="changes" class="guide-section">
+          <h2>What It Changes</h2>
+          <figure class="screenshot"><img alt="Other Options, Macros in Find Regex and Ephemerality" data-fallback="https://raw.githubusercontent.com/SepsisShock/NTR-Extension/main/assets/regex-help/ephemerality.png" decoding="async" loading="lazy" src="https://cdn.jsdelivr.net/gh/SepsisShock/NTR-Extension@main/assets/regex-help/ephemerality.png"></figure>
+          <p>The two <span class="field">Ephemerality</span> boxes decide what gets changed:</p>
+          <div class="table-wrap">
+            <table class="guide-table table-stack" role="table" aria-labelledby="table-title-6">
+              <caption id="table-title-6" class="sr-only">Alter Chat Display / Alter Outgoing Prompt / Result</caption>
+              <thead role="rowgroup">
+                <tr role="row">
+                  <th scope="col" role="columnheader" id="t6-c0">Alter Chat Display</th>
+                  <th scope="col" role="columnheader" id="t6-c1">Alter Outgoing Prompt</th>
+                  <th scope="col" role="columnheader" id="t6-c2" data-kind="result">Result</th>
+                </tr>
+              </thead>
+              <tbody role="rowgroup">
+                <tr role="row">
+                  <td role="cell" headers="t6-c0"><span class="table-label" aria-hidden="true">Alter Chat Display</span><span class="cell-content">Off</span></td>
+                  <td role="cell" headers="t6-c1"><span class="table-label" aria-hidden="true">Alter Outgoing Prompt</span><span class="cell-content">Off</span></td>
+                  <td role="cell" headers="t6-c2" data-kind="result"><span class="table-label" aria-hidden="true">Result</span><span class="cell-content">Changes the saved message permanently. New messages are affected when they arrive, and edited ones when Run On Edit is enabled.</span></td>
+                </tr>
+                <tr role="row">
+                  <td role="cell" headers="t6-c0"><span class="table-label" aria-hidden="true">Alter Chat Display</span><span class="cell-content">On</span></td>
+                  <td role="cell" headers="t6-c1"><span class="table-label" aria-hidden="true">Alter Outgoing Prompt</span><span class="cell-content">Off</span></td>
+                  <td role="cell" headers="t6-c2" data-kind="result"><span class="table-label" aria-hidden="true">Result</span><span class="cell-content">Changes what you see. The saved message and AI prompt stay the same.</span></td>
+                </tr>
+                <tr role="row">
+                  <td role="cell" headers="t6-c0"><span class="table-label" aria-hidden="true">Alter Chat Display</span><span class="cell-content">Off</span></td>
+                  <td role="cell" headers="t6-c1"><span class="table-label" aria-hidden="true">Alter Outgoing Prompt</span><span class="cell-content">On</span></td>
+                  <td role="cell" headers="t6-c2" data-kind="result"><span class="table-label" aria-hidden="true">Result</span><span class="cell-content">Changes what the AI receives. The display and saved message stay the same.</span></td>
+                </tr>
+                <tr role="row">
+                  <td role="cell" headers="t6-c0"><span class="table-label" aria-hidden="true">Alter Chat Display</span><span class="cell-content">On</span></td>
+                  <td role="cell" headers="t6-c1"><span class="table-label" aria-hidden="true">Alter Outgoing Prompt</span><span class="cell-content">On</span></td>
+                  <td role="cell" headers="t6-c2" data-kind="result"><span class="table-label" aria-hidden="true">Result</span><span class="cell-content">Changes the display and AI prompt, but not the saved message.</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <aside class="notice notice-warning"><strong>Visual regexes: tick only Alter Chat Display</strong><p>For regexes that add HTML, images or colors, untick <span class="field">Alter Outgoing Prompt</span>. Otherwise the AI also receives the formatting code, wasting tokens and possibly affecting its responses. Leaving both unticked saves that code into the message itself.</p></aside>
+        </section>
+        <section id="depth" class="guide-section">
+          <h2>Affect and Depth</h2>
+          <figure class="screenshot"><img alt="Affects and Min/Max Depth" data-fallback="https://raw.githubusercontent.com/SepsisShock/NTR-Extension/main/assets/regex-help/affects-depth.png" decoding="async" loading="lazy" src="https://cdn.jsdelivr.net/gh/SepsisShock/NTR-Extension@main/assets/regex-help/affects-depth.png"></figure>
+          <ul>
+            <li><span class="field">Affects</span>: which kinds of text it runs on (AI Output, User Input, Slash Commands, World Info, Reasoning).</li>
+            <li><span class="field">Min Depth</span>: skip a number of recent messages, then apply to older messages.</li>
+            <li><span class="field">Max Depth</span>: apply to the newest message and up to the selected depth.</li>
+            <li>Leave a depth box empty (Unlimited) for no limit.</li>
+          </ul>
+          <aside class="notice notice-warning">
+            <strong>Min Depth / Max Depth might affect prompt caching</strong>
+            <p>Some APIs reuse the unchanged beginning of your prompt at a discount. If a regex changes an older message each turn, everything from that message on may be sent at full price.</p>
+            <ul>
+              <li>Small depth ranges often limit the impact.</li>
+              <li>For Claude, compare your chosen depth against your configured <code>cachingAtDepth</code>.</li>
+              <li>Unlimited depth is generally more stable for caching when replacements and macros produce the same output each turn.</li>
+            </ul>
+          </aside>
+        </section>
+        <section id="other" class="guide-section">
+          <h2>Other Settings</h2>
+          <figure class="screenshot"><img alt="Trim Out box" data-fallback="https://raw.githubusercontent.com/SepsisShock/NTR-Extension/main/assets/regex-help/trim-out.png" decoding="async" loading="lazy" src="https://cdn.jsdelivr.net/gh/SepsisShock/NTR-Extension@main/assets/regex-help/trim-out.png"></figure>
+          <ul>
+            <li><span class="field">Trim Out</span>: words removed from the found text before <code>$1</code> or <code>{{match}}</code> puts it back. Usually left empty.</li>
+            <li><span class="field">Macros in Find Regex</span>: <ul><li>Don't substitute: looks for the literal letters <code>{{char}}</code>.</li><li>Substitute (raw): looks for the character's name instead.</li><li>Substitute (escaped): likewise, but escapes regex symbols in the name, such as the dot in “Dr. Who”.</li></ul></li>
+          </ul>
+        </section>
+        <footer class="guide-footer">Adapted from the <a href="https://github.com/SepsisShock/NTR-Extension/blob/main/regex.js">NTR-Extension Regex Basics guide</a>. Screenshots are loaded from the original repository. <a href="https://docs.sillytavern.app/">Official SillyTavern Docs</a>.<div class="guide-author">SepsisShock · October 2026</div></footer>
+      </div>
+    </main>
+    <div id="copy-status" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></div>
+  </body>
+</html>
