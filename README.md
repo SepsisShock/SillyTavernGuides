@@ -38,7 +38,7 @@ Pick a topic and explore it at your own pace. The guides are written to make unf
       <br><br>
       A visual introduction to Prompt Post-Processing (PPP), including how SillyTavern arranges messages before sending them to an API.
       <br><br>
-      <a href="./sillytavern_ppp.html"><strong>↗ Open Prompt Post-Processing</strong></a>
+      <a href="./ppp-basics.html"><strong>↗ Open Prompt Post-Processing</strong></a>
     </td>
   </tr>
 </table>
