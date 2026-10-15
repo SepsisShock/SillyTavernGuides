@@ -31,14 +31,14 @@ Pick a topic and explore it at your own pace. The guides are written to make unf
       <br><br>
       Learn how SillyTavern regex scripts work, what goes in Find Regex and Replace With, and how the available settings affect your chat.
       <br><br>
-      <a href="./regex-basics.html"><strong>↗ Open Regex Basics</strong></a>
+      <a href="./regex.html"><strong>↗ Open Regex Basics</strong></a>
     </td>
     <td valign="top">
       <strong>See how your prompt gets packed.</strong>
       <br><br>
       A visual introduction to Prompt Post-Processing (PPP), including how SillyTavern arranges messages before sending them to an API.
       <br><br>
-      <a href="./ppp-basics.html"><strong>↗ Open Prompt Post-Processing</strong></a>
+      <a href="./ppp.html"><strong>↗ Open Prompt Post-Processing</strong></a>
     </td>
   </tr>
 </table>
