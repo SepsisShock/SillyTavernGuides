@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Learn what Continue Postfix does in SillyTavern, with an interactive example of how continued replies join together.">
+<title>Continue Postfix | ST Beginner Guides</title>
+<link rel="stylesheet" href="./assets/css/guides.css">
+<script src="./assets/js/guides.js" defer></script>
+<script src="./assets/js/navigation.js" defer></script>
+<style>
+.postfix-demo{margin:var(--space-5) 0;padding:var(--space-5);border:1px solid var(--color-border);border-radius:var(--radius-md);background:var(--color-surface)}
+.postfix-demo h3{margin:0 0 var(--space-2);font-size:1.03rem}
+.postfix-choices{display:flex;flex-wrap:wrap;gap:var(--space-2);margin:var(--space-4) 0 var(--space-5)}
+.postfix-choices button{min-height:42px;padding:8px 15px;border:1px solid var(--color-border);border-radius:var(--radius-sm);background:var(--color-code);color:var(--color-muted);cursor:pointer;font-size:.88rem;font-weight:650}
+.postfix-choices button:hover{color:var(--color-text);border-color:var(--color-accent)}
+.postfix-choices button[aria-pressed="true"]{color:var(--color-accent);background:var(--color-accent-soft);border-color:var(--color-accent)}
+.postfix-pieces{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-3)}
+.postfix-piece{min-width:0;padding:var(--space-4);border:1px solid var(--color-border);border-radius:var(--radius-sm);background:#111c27}
+.postfix-label{display:block;color:var(--color-muted);font-size:.73rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-bottom:var(--space-2)}
+.postfix-piece p{margin:0;line-height:1.6}
+.postfix-result{margin-top:var(--space-4);padding:var(--space-4);border:1px solid #456877;border-radius:var(--radius-sm);background:var(--color-accent-soft)}
+.postfix-result .postfix-label{color:var(--color-accent)}
+.postfix-result p{margin:0;white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.75}
+.postfix-caption{margin:var(--space-3) 0 0;color:var(--color-muted);font-size:.88rem}
+.postfix-mini{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--space-4);margin:var(--space-5) 0}
+.postfix-mini>div{min-width:0;padding:var(--space-4);border:1px solid var(--color-border);border-radius:var(--radius-sm);background:var(--color-surface)}
+.postfix-mini h3{margin:0 0 var(--space-2);font-size:1rem}
+.postfix-mini p{margin:0;color:var(--color-muted);font-size:.92rem}
+@media(max-width:650px){.postfix-pieces,.postfix-mini{grid-template-columns:1fr}.postfix-demo{padding:var(--space-4)}.postfix-choices button{flex:1 1 120px}}
+</style>
+</head>
+<body class="guide">
+<a class="skip-link" href="#main-content">Skip to guide</a>
+<nav class="st-site-nav" aria-label="Site navigation"><a class="st-brand" href="./index.html">ST BEGINNER GUIDES</a><div class="st-site-actions"><details><summary>Guides</summary><div class="st-menu" data-guide-menu></div></details></div></nav>
+<main class="guide-shell" id="main-content" tabindex="-1">
+<header class="guide-hero" id="top"><h1>Continue Postfix</h1><p class="lede">What happens when you ask the AI to keep writing the same reply?</p></header>
+<nav class="guide-toc" aria-label="On this page"><details class="toc-panel" open><summary class="toc-summary">On this page</summary><div class="toc-links"><a href="#what">What does it do?</a><a href="#demo">See the difference</a><a href="#choose">Which should I use?</a><a href="#nudge">Continue Nudge vs. Postfix</a></div></details><a class="back-to-top" href="#top">Back to top <span aria-hidden="true">↑</span></a></nav>
+<article class="guide-article">
+<section class="guide-section" id="what"><h2>What does Continue Postfix do?</h2>
+<p>Sometimes the AI stops writing before you're ready. You press <span class="field">Continue</span> to get more of the same reply.</p>
+<p><strong>Continue Postfix adds a small bit of spacing to the beginning of that new text.</strong> This helps control how the new writing joins the previous writing. It doesn't change the story or tell the AI what to say.</p></section>
+<section class="guide-section" id="demo"><h2>See the difference</h2>
+<p>Imagine Homelander is showing Anya how to bake a cake. He stops in the middle of his explanation, so you press <span class="field">Continue</span>. Try the options to see how the text is joined.</p>
+<div class="postfix-demo">
+<h3>Continue Postfix</h3>
+<div class="postfix-choices" role="group" aria-label="Choose Continue Postfix">
+<button type="button" data-postfix="none" aria-pressed="false">None</button>
+<button type="button" data-postfix="space" aria-pressed="true">Space</button>
+<button type="button" data-postfix="newline" aria-pressed="false">Newline</button>
+<button type="button" data-postfix="double" aria-pressed="false">Double newline</button>
+</div>
+<div class="postfix-pieces">
+<div class="postfix-piece"><span class="postfix-label">Original reply</span><p>Anya watched as Homelander opened the oven.</p></div>
+<div class="postfix-piece"><span class="postfix-label">New text from Continue</span><p>He pulled out the cake.</p></div>
+</div>
+<div class="postfix-result"><span class="postfix-label">Combined reply</span><p id="postfix-output" aria-live="polite"></p></div>
+<p class="postfix-caption" id="postfix-caption"></p>
+</div>
+<p>The postfix goes immediately before the newly generated text. In this example, you can see the difference in the final combined reply.</p></section>
+<section class="guide-section" id="choose"><h2>Which should I use?</h2>
+<div class="table-wrap"><table class="guide-table table-stack"><thead><tr><th scope="col">Option</th><th scope="col">What it adds</th><th scope="col">When it helps</th></tr></thead><tbody>
+<tr><td><span class="table-label">Option</span><span class="cell-content"><strong>None</strong></span></td><td><span class="table-label">What it adds</span><span class="cell-content">Nothing</span></td><td><span class="table-label">When it helps</span><span class="cell-content">The original reply stopped mid-word, and the new text needs to attach directly.</span></td></tr>
+<tr><td><span class="table-label">Option</span><span class="cell-content"><strong>Space</strong></span></td><td><span class="table-label">What it adds</span><span class="cell-content">One space</span></td><td><span class="table-label">When it helps</span><span class="cell-content">You want the writing to continue on the same line.</span></td></tr>
+<tr><td><span class="table-label">Option</span><span class="cell-content"><strong>Newline</strong></span></td><td><span class="table-label">What it adds</span><span class="cell-content">One line break</span></td><td><span class="table-label">When it helps</span><span class="cell-content">You want the new text to start on the next line.</span></td></tr>
+<tr><td><span class="table-label">Option</span><span class="cell-content"><strong>Double newline</strong></span></td><td><span class="table-label">What it adds</span><span class="cell-content">Two line breaks</span></td><td><span class="table-label">When it helps</span><span class="cell-content">You want a blank line between paragraphs.</span></td></tr>
+</tbody></table></div>
+<p>For most ordinary continuations, <strong>Space</strong> is a reasonable starting point. If the AI commonly stops in the middle of words, <strong>None</strong> may fit better.</p>
+<div class="notice notice-warning"><strong>One small catch</strong><p>A postfix can't fix every awkward continuation. The AI might repeat itself, change direction, or generate its own spaces and line breaks. These options only control the extra text that SillyTavern inserts.</p></div>
+</section>
+<section class="guide-section" id="nudge"><h2>Continue Nudge vs. Continue Postfix</h2><p>These two settings sound similar, but they have different jobs.</p>
+<div class="postfix-mini"><div><h3>Continue Nudge</h3><p>Instructions sent to the AI to encourage it to keep writing.</p></div><div><h3>Continue Postfix</h3><p>Spacing added before the newly generated continuation text.</p></div></div>
+<p>Think of <span class="field">Continue Nudge</span> as telling the AI, “Keep going,” while <span class="field">Continue Postfix</span> decides whether its new writing should begin with a space or a line break.</p></section>
+<footer class="guide-footer" style="text-align:center"><p>Reference documentation: <a href="https://docs.sillytavern.app/usage/prompts/prompt-manager/">SillyTavern Prompt Manager</a></p><p>SepsisShock · October 2026</p></footer>
+</article>
+</main>
+<script>
+(()=>{'use strict';const original='Anya watched as Homelander opened the oven.';const next='He pulled out the cake.';const separators={none:'',space:' ',newline:'\n',double:'\n\n'};const labels={none:'Nothing is inserted. The two pieces touch directly.',space:'One space is inserted between the two pieces.',newline:'The continuation starts on the next line.',double:'The continuation starts after a blank line.'};const output=document.getElementById('postfix-output');const caption=document.getElementById('postfix-caption');const buttons=[...document.querySelectorAll('[data-postfix]')];function render(mode){output.textContent=original+separators[mode]+next;caption.textContent=labels[mode];buttons.forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.postfix===mode)));}buttons.forEach(b=>b.addEventListener('click',()=>render(b.dataset.postfix)));render('space');})();
+</script>
+</body></html>
