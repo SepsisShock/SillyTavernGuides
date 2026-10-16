@@ -7,6 +7,7 @@
     ['regex.html', 'Regex Basics'],
     ['sampler-settings.html', 'Sampler Settings'],
     ['seed.html', 'Seed'],
+    ['squash-system-messages.html', 'Squash System Messages'],
     ['tool-calls.html', 'Tool Calls'],
     ['zen-sliders-mad-lab.html', 'Zen Sliders & Mad Lab Mode']
   ];
