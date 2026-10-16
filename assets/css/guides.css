@@ -278,8 +278,6 @@ h2 .field {
   display: flex;
   gap: .7rem;
   padding: .65rem .65rem .65rem .8rem;
-  border-left: 2px solid transparent;
-  margin-left: -1px;
   text-decoration: none;
   color: var(--color-muted);
   font-size: .9rem;
@@ -300,7 +298,6 @@ h2 .field {
 
 .toc-links a[aria-current] {
   background: var(--color-accent-soft);
-  border-left-color: var(--color-accent);
   color: var(--color-accent);
 }
 
