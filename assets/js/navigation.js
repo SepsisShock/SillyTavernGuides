@@ -3,6 +3,7 @@
   'use strict';
   const guides = [
     ['character-names-behavior.html', 'Character Names Behavior'],
+    ['chat-vs-text-completion.html', 'Chat Completion vs Text Completion'],
     ['continue-postfix.html', 'Continue Postfix'],
     ['ppp.html', 'Prompt Post-Processing'],
     ['regex.html', 'Regex Basics'],
