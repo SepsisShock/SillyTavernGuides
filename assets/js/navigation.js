@@ -3,6 +3,7 @@
   'use strict';
   const guides = [
     ['character-names-behavior.html', 'Character Names Behavior'],
+    ['continue-postfix.html', 'Continue Postfix'],
     ['ppp.html', 'Prompt Post-Processing'],
     ['regex.html', 'Regex Basics'],
     ['sampler-settings.html', 'Sampler Settings'],
