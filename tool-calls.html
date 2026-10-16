@@ -22,8 +22,73 @@ a{color:var(--accent)}a:hover{text-decoration-thickness:2px}.page{max-width:1000
 .st-site-nav .st-menu{position:absolute;right:0;top:calc(100% + 12px);min-width:220px;padding:8px;background:#19212b;border:1px solid #344353;border-radius:12px;box-shadow:0 12px 32px #0007;z-index:50}
 .st-site-nav .st-menu a{display:block;padding:9px 11px;border-radius:7px}.st-site-nav .st-menu a:hover{background:#283844}.st-site-nav a[aria-current="page"]{color:#83c9d9;font-weight:700}
 @media(max-width:520px){.st-site-nav{padding:16px;gap:8px;flex-wrap:wrap}.st-site-nav .st-brand{font-size:11px}.st-site-actions{gap:15px}}
+</style><style id="shared-guide-redesign">
+:root{--bg:#101720;--surface:#17222e;--surface2:#1d2c3a;--line:#304252;--text:#e3eaf1;--muted:#b9c8d6;--accent:#8ed9e8;--gold:#e8bd74;--green:#b8dfcf}
+body{background:var(--bg);color:var(--text);font:1rem/1.75 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+.page.guide-shell{max-width:1280px;padding:56px 32px 72px;display:grid;grid-template-columns:210px minmax(0,870px);column-gap:68px;align-items:start}
+.page.guide-shell > :not(nav){grid-column:2;min-width:0}
+.hero{grid-row:1;padding:0 0 36px;margin-bottom:28px;border-color:var(--line)}
+h1{margin:14px 0 22px;font-size:clamp(2.65rem,4.5vw,4.25rem);line-height:1.12;font-weight:750}
+h2{font-size:clamp(1.4rem,2.4vw,1.8rem);line-height:1.35;margin:0 0 20px;font-weight:650}
+h3{font-size:1.13rem;line-height:1.35}
+p{color:var(--text);margin:1rem 0}
+.lead{max-width:none;color:var(--muted);font-size:1.2rem;line-height:1.75}
+.page > nav{grid-column:1;grid-row:1 / span 18;position:sticky;top:32px;max-height:calc(100vh - 64px);overflow-y:auto;padding:3px 0 0;border:0;scrollbar-width:thin;scrollbar-color:var(--line) transparent}
+.page > nav strong{display:block;font-size:.79rem;color:var(--text);font-weight:650;margin:0 0 16px}
+.page .navlinks{display:grid;gap:0;margin:0;border-left:1px solid var(--line);counter-reset:tooltoc}
+.page .navlinks a{border:0;border-radius:0;display:flex;align-items:baseline;gap:.7rem;margin-left:-1px;padding:.65rem .65rem .65rem .8rem;font-size:.9rem;line-height:1.5;color:var(--muted);background:transparent}
+.page .navlinks a::before{counter-increment:tooltoc;content:counter(tooltoc,decimal-leading-zero);font:.72rem/1.8 ui-monospace,Consolas,monospace;color:#a7bac9}
+.page .navlinks a:hover{background:#15232e;color:var(--text)}
+.page .navlinks a.current{background:#182e3b;color:var(--accent)}
+.page .navlinks a.current::before{color:var(--accent)}
+.page > section{padding-top:48px;scroll-margin-top:28px}
+.page > section + section{margin-top:32px;border-top:1px solid #253442}
+.panel{background:var(--surface);border-color:var(--line);border-radius:10px;padding:20px;margin:20px 0}
+.step{background:#172431;border-color:var(--line);border-radius:10px}
+.step .number{border-radius:7px;background:#203e4e;color:var(--accent)}
+.step.tool{background:#25251f;border-color:#715d40}
+.step.tool .number{background:#51402b;color:var(--gold)}
+.table-wrap{border-color:var(--line);border-radius:10px;overflow:hidden}
+table{min-width:0;table-layout:fixed}
+th{background:var(--surface2);font-size:.82rem;font-weight:650}
+td,th{padding:15px 16px;border-color:#253442;overflow-wrap:anywhere}
+tbody tr:nth-child(even){background:#172431}
+.field{display:inline;padding:.1em .34em;border:1px solid #37515e;border-radius:5px;background:#182e3b;color:#a4dfeb;font-size:.89em;font-weight:600}
+code{background:#0d141d;border-radius:5px}
+.goldline,.cost-warning{border:0;border-left:3px solid var(--gold);border-radius:0 5px 5px 0;background:#25251f;padding:16px 20px}
+.cost-warning h2,.goldline strong{color:var(--gold)}
+.switches{gap:8px}
+button{background:#1d2c3a;border:1px solid #3b5061;border-radius:6px;padding:9px 14px}
+button[aria-pressed="true"]{background:#182e3b;border-color:var(--accent);color:var(--accent)}
+button:focus-visible,a:focus-visible,.faq summary:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.demo-frame{background:#0d141d;border-color:var(--line);border-radius:10px}
+.bubble{border-radius:6px}
+.faq details{border-color:var(--line);border-radius:7px}
+footer{text-align:center;border-color:var(--line);margin-top:56px}
+footer p{font-size:.86rem;color:var(--muted)}
+.st-site-nav{max-width:1280px;border-color:var(--line)}
+.st-site-nav .st-brand{color:var(--accent)}
+.st-site-nav .st-menu{background:var(--surface);border-color:var(--line)}
+@media(max-width:1050px){.page.guide-shell{grid-template-columns:175px minmax(0,1fr);column-gap:36px;padding-inline:24px}}
+@media(max-width:800px){
+.page.guide-shell{display:block;padding:32px 24px 56px}
+.page > nav{position:static;max-height:none;border-bottom:1px solid var(--line);padding:0 0 20px;margin-bottom:24px}
+.page .navlinks{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
+.hero{margin-bottom:24px}
+.page > section{padding-top:32px}
+.page > section + section{margin-top:24px}
+}
+@media(max-width:650px){
+.page.guide-shell{padding:28px 20px 40px}
+.page .navlinks{grid-template-columns:1fr}
+table{display:block;overflow-x:auto;table-layout:auto;min-width:0}
+th,td{min-width:140px}
+table th:first-child,table td:first-child{min-width:175px}
+.compare,.mini-grid{grid-template-columns:1fr}
+}
+@media print{.page.guide-shell{display:block}.page > nav{display:none}}
 </style></head>
-<body><nav class="st-site-nav" aria-label="Site navigation"><a class="st-brand" href="./index.html">ST BEGINNER GUIDES</a><div class="st-site-actions"><details><summary>Guides</summary><div class="st-menu"><a href="./ppp.html">Prompt Post-Processing</a><a href="./regex.html">Regex Basics</a><a href="./tool-calls.html" aria-current="page">Tool Calls</a></div></details></div></nav><main class="page">
+<body><nav class="st-site-nav" aria-label="Site navigation"><a class="st-brand" href="./index.html">ST BEGINNER GUIDES</a><div class="st-site-actions"><details><summary>Guides</summary><div class="st-menu"><a href="./ppp.html">Prompt Post-Processing</a><a href="./regex.html">Regex Basics</a><a href="./tool-calls.html" aria-current="page">Tool Calls</a></div></details></div></nav><main class="page guide-shell">
 <header class="hero"><h1>Tool Calls</h1><p class="lead">How an AI asks another program for help, and what actually happens when it does.</p></header>
 <nav aria-label="On this page"><strong>On this page</strong><div class="navlinks"><a href="#what">What are tool calls?</a><a href="#demo">Try an example</a><a href="#enable">Turn them on</a><a href="#api">Chat vs. Text</a><a href="#tools">Available tools</a><a href="#ppp">PPP &amp; tools</a><a href="#faq">Questions</a></div></nav>
 <section id="what"><h2>What is a tool call?</h2><p>Imagine the AI as a receptionist. You ask, “What’s 2 + 2?” They already know the answer. But if you ask, “Has my package arrived?” they contact the mailroom, get the answer, and tell you.</p><p>The AI works similarly: it can answer directly or request help when a suitable tool is available. <strong style="color:var(--text)">A tool call is when the AI requests that another program perform a specific job.</strong> SillyTavern or a compatible integration runs that tool, returns the result, and the AI can use it to reply.</p>
@@ -63,4 +128,13 @@ document.addEventListener('keydown',event=>{
     });
   }
 });
+</script><script>
+(function(){
+const links=Array.from(document.querySelectorAll('.page .navlinks a'));
+if(!('IntersectionObserver' in window))return;
+const observer=new IntersectionObserver(entries=>{
+for(const entry of entries){if(entry.isIntersecting){links.forEach(link=>link.classList.toggle('current',link.getAttribute('href')==='#'+entry.target.id));}}
+},{rootMargin:'-12% 0px -73% 0px'});
+document.querySelectorAll('.page > section[id]').forEach(section=>observer.observe(section));
+})();
 </script></body></html>
