@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="A beginner-friendly guide to Character Names Behavior in SillyTavern.">
+<title>Character Names Behavior | ST Beginner Guides</title>
+<link rel="stylesheet" href="./assets/css/guides.css">
+<script src="./assets/js/guides.js" defer></script>
+<style>
+.chat-comparison{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin:24px 0 10px}
+.chat-example{min-width:0;border:1px solid var(--color-border);border-radius:var(--radius-md);padding:16px;background:var(--color-surface)}
+.chat-example h3{margin:0 0 14px;font-size:1.03rem}
+.mock-phone{background:var(--color-code);border:1px solid var(--color-border);border-radius:16px;overflow:hidden}
+.mock-header{display:flex;align-items:center;gap:10px;padding:12px 14px;background:var(--color-surface-raised);border-bottom:1px solid var(--color-border)}
+.mock-avatar{display:grid;place-items:center;width:35px;height:35px;flex:none;border-radius:50%;background:#294554;color:var(--color-accent);font-size:.76rem;font-weight:700}
+.mock-header strong{display:block;font-size:.89rem;line-height:1.35}.mock-header small{display:block;color:var(--color-muted);font-size:.75rem}
+.mock-thread{display:flex;flex-direction:column;align-items:flex-start;gap:14px;padding:18px 12px;min-height:244px}
+.text-message{display:flex;gap:8px;align-items:flex-end;max-width:95%}
+.mini-avatar{width:27px;height:27px;flex:none;border-radius:50%;display:grid;place-items:center;background:#304959;color:#e2f4f9;font-size:.72rem;font-weight:700}
+.bubble-group{min-width:0}.sender-name{margin:0 0 5px 6px;font-size:.73rem;color:var(--color-muted);line-height:1.3}
+.bubble{padding:9px 12px;background:#263b4c;border:1px solid #385064;border-radius:13px 13px 13px 4px;font-size:.9rem;line-height:1.5}
+.homelander .mini-avatar{background:#514656;color:#f7dba9}.homelander .sender-name{color:#e8c990}
+.butcher .mini-avatar{background:#3b5248;color:#d0ead8}.butcher .sender-name{color:#b5dbca}
+.chat-example .explanation{margin:13px 0 0;font-size:.91rem;color:var(--color-muted)}
+.chat-note{font-size:.85rem;color:var(--color-muted);margin:0 0 20px}
+.mode-note{padding:14px 18px;border-left:3px solid var(--color-accent);border-radius:0 6px 6px 0;background:var(--color-surface)}
+.mode-note p{margin:0}
+@media(max-width:730px){.chat-comparison{grid-template-columns:1fr}.mock-thread{min-height:auto}}
+</style>
+</head>
+<body class="guide">
+<a class="skip-link" href="#main-content">Skip to guide</a>
+<nav class="st-site-nav" aria-label="Site navigation"><a class="st-brand" href="./index.html">ST BEGINNER GUIDES</a><div class="st-site-actions"><details><summary>Guides</summary><div class="st-menu"><a href="./character-names-behavior.html" aria-current="page">Character Names Behavior</a><a href="./ppp.html">Prompt Post-Processing</a><a href="./regex.html">Regex Basics</a><a href="./sampler-settings.html">Sampler Settings</a><a href="./tool-calls.html">Tool Calls</a><a href="./zen-sliders-mad-lab.html">Zen Sliders &amp; Mad Lab Mode</a></div></details></div></nav>
+<main class="guide-shell" id="main-content" tabindex="-1">
+<header class="guide-hero" id="top"><h1>Character Names Behavior</h1><p class="lede">How SillyTavern tells the AI who's speaking in a conversation.</p></header>
+<nav class="guide-toc" aria-label="On this page"><details class="toc-panel" open><summary class="toc-summary">On this page</summary><div class="toc-links"><a href="#why">Why does it exist?</a><a href="#example">Group text example</a><a href="#settings">The four options</a><a href="#choose">What should I use?</a></div></details><a class="back-to-top" href="#top">Back to top <span aria-hidden="true">↑</span></a></nav>
+<article class="guide-article">
+<section id="why"><h2>Why does it exist?</h2><p>When you're talking to one character, it's usually easy for the AI to follow along. But what if you're chatting with Homelander and Butcher at the same time?</p><p>The API identifies messages as coming from the <code>user</code> or <code>assistant</code>, but that doesn't always tell it <em>which character</em> spoke. Character Names Behavior controls how SillyTavern adds speaker names to messages sent to the AI.</p></section>
+<section class="guide-section" id="example"><h2>Imagine a group text</h2><p>Imagine opening a group text where two people have the same contact name. You can read their messages, but telling them apart is harder.</p>
+<div class="chat-comparison">
+<div class="chat-example"><h3>Without clear names</h3><div class="mock-phone" aria-label="Group text with unnamed AI speakers"><div class="mock-header"><div class="mock-avatar">GC</div><div><strong>Super Fight Group</strong><small>Group chat</small></div></div><div class="mock-thread">
+<div class="text-message"><span class="mini-avatar">AI</span><div class="bubble-group"><div class="sender-name">AI</div><div class="bubble">I can fly.</div></div></div>
+<div class="text-message"><span class="mini-avatar">AI</span><div class="bubble-group"><div class="sender-name">AI</div><div class="bubble">Nobody cares.</div></div></div>
+<div class="text-message"><span class="mini-avatar">AI</span><div class="bubble-group"><div class="sender-name">AI</div><div class="bubble">Watch your mouth.</div></div></div>
+</div></div><p class="explanation">All three messages say “AI.” Which character said each line?</p></div>
+<div class="chat-example"><h3>With clear names</h3><div class="mock-phone" aria-label="Group text with Homelander and Butcher identified"><div class="mock-header"><div class="mock-avatar">GC</div><div><strong>Super Fight Group</strong><small>Group chat</small></div></div><div class="mock-thread">
+<div class="text-message homelander"><span class="mini-avatar">H</span><div class="bubble-group"><div class="sender-name">Homelander</div><div class="bubble">I can fly.</div></div></div>
+<div class="text-message butcher"><span class="mini-avatar">B</span><div class="bubble-group"><div class="sender-name">Butcher</div><div class="bubble">Nobody cares.</div></div></div>
+<div class="text-message homelander"><span class="mini-avatar">H</span><div class="bubble-group"><div class="sender-name">Homelander</div><div class="bubble">Watch your mouth.</div></div></div>
+</div></div><p class="explanation">Now you can see who said what without guessing.</p></div>
+</div><p class="chat-note">This is an analogy for speaker identification, not a literal preview of an API request.</p></section>
+<section class="guide-section" id="settings"><h2>What do the four options do?</h2><p>They control whether SillyTavern adds speaker names and where those names go.</p>
+<div class="table-wrap"><table class="guide-table table-stack"><thead><tr><th>Option</th><th>What it does</th><th>Think of it as...</th></tr></thead><tbody>
+<tr><td data-label="Option"><strong>None</strong></td><td data-label="What it does">Doesn't add extra speaker-name labels through this setting.</td><td data-label="Think of it as...">Leaving off the contact name.</td></tr>
+<tr><td data-label="Option"><strong>Default</strong></td><td data-label="What it does">Adds names selectively, particularly when groups or different personas need them.</td><td data-label="Think of it as...">Adding contact names when useful.</td></tr>
+<tr><td data-label="Option"><strong>Completion</strong></td><td data-label="What it does">Puts the name in a separate API <code>name</code> field, where supported.</td><td data-label="Think of it as...">A contact label attached to the message rather than inside its text.</td></tr>
+<tr><td data-label="Option"><strong>Message Content</strong></td><td data-label="What it does">Adds the name to the actual message text.</td><td data-label="Think of it as...">Writing <code>Homelander: I can fly.</code> inside the bubble.</td></tr>
+</tbody></table></div><p>Different API providers support speaker names differently. That's one reason SillyTavern gives you several options.</p></section>
+<section class="guide-section" id="choose"><h2>What should I use?</h2><p><strong>For most beginners, leave it on Default.</strong> In an ordinary one-on-one chat, the API already separates your messages from the AI's. You probably won't need to change this setting.</p><p>It's more useful with multiple characters or when a particular API needs a different way to label speakers.</p><div class="mode-note"><p><strong>Important:</strong> This affects the messages sent to the AI, not the names displayed in SillyTavern's chat window. It also doesn't stop the AI from writing dialogue for your character.</p></div></section>
+<footer class="guide-footer"><p>SepsisShock · October 2026</p></footer>
+</article></main>
+</body></html>
