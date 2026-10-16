@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Understand Chat Completion and Text Completion in SillyTavern with simple roleplay examples.">
+<title>Chat Completion vs Text Completion | ST Beginner Guides</title>
+<link rel="stylesheet" href="./assets/css/guides.css"><script src="./assets/js/guides.js" defer></script><script src="./assets/js/navigation.js" defer></script>
+<style>
+.completion-demo{margin:24px 0;padding:24px;border:1px solid var(--color-border);border-radius:var(--radius-md);background:var(--color-surface)}
+.completion-controls{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 18px}
+.completion-controls button{padding:9px 15px;min-height:42px;border:1px solid var(--color-border);border-radius:var(--radius-sm);background:var(--color-code);color:var(--color-muted);cursor:pointer}
+.completion-controls button[aria-pressed=true]{border-color:var(--color-accent);background:var(--color-accent-soft);color:var(--color-accent)}
+.completion-screen{background:var(--color-code);border:1px solid var(--color-border);border-radius:var(--radius-sm);padding:18px;min-height:230px}
+.completion-screen[hidden]{display:none}
+.completion-message{display:grid;grid-template-columns:85px minmax(0,1fr);gap:12px;padding:12px 0;border-bottom:1px solid var(--color-border-soft)}
+.completion-message:last-child{border-bottom:0}
+.completion-role{color:var(--color-accent);font:700 .77rem/1.6 var(--font-code)}
+.completion-message p{margin:0}
+.completion-raw{margin:0;white-space:pre-wrap;overflow-wrap:anywhere;color:var(--color-text);font: .9rem/1.85 var(--font-code)}
+.completion-caption{color:var(--color-muted);font-size:.9rem;margin:14px 0 0}
+@media(max-width:580px){.completion-demo{padding:15px}.completion-message{grid-template-columns:1fr;gap:2px}.completion-controls button{flex:1}}
+</style></head>
+<body class="guide"><a class="skip-link" href="#main-content">Skip to guide</a>
+<nav class="st-site-nav" aria-label="Site navigation"><a class="st-brand" href="./index.html">ST BEGINNER GUIDES</a><div class="st-site-actions"><details><summary>Guides</summary><div class="st-menu" data-guide-menu></div></details></div></nav>
+<main class="guide-shell" id="main-content" tabindex="-1">
+<header class="guide-hero" id="top"><h1>Chat Completion vs Text Completion</h1><p class="lede">Both let you talk to an AI. So why does SillyTavern have two different ways to send a conversation?</p></header>
+<nav class="guide-toc" aria-label="On this page"><details class="toc-panel" open><summary class="toc-summary">On this page</summary><div class="toc-links"><a href="#difference">What's the difference?</a><a href="#example">See what gets sent</a><a href="#roles">Can Text Completion use roles?</a><a href="#compare">Compare the two</a><a href="#settings">Where are the settings?</a><a href="#choose">Which should I use?</a></div></details><a class="back-to-top" href="#top">Back to top <span aria-hidden="true">↑</span></a></nav>
+<article class="guide-article">
+<section class="guide-section" id="difference"><h2>What's the difference?</h2><p>Imagine Anya is roleplaying with Homelander. She asks him how to bake a cake, and SillyTavern sends the conversation to an AI.</p><p><strong>Chat Completion sends separate messages with roles attached.</strong> The API can distinguish a System instruction, a User message, and an Assistant reply.</p><p><strong>Text Completion sends a continuous piece of text.</strong> The AI reads what's written so far and generates what comes next. Names and special formatting can tell it who's speaking.</p><p>It's the difference between sending a conversation as individually labeled messages and handing over a script with a blank space at the end.</p></section>
+<section class="guide-section" id="example"><h2>See what gets sent</h2><p>Switch between the examples. The conversation is the same, but the way it's packaged changes.</p>
+<div class="completion-demo"><div class="completion-controls" role="group" aria-label="Completion format"><button type="button" data-format="chat" aria-pressed="true">Chat Completion</button><button type="button" data-format="text" aria-pressed="false">Text Completion</button></div>
+<div class="completion-screen" id="completion-chat"><div class="completion-message"><span class="completion-role">system</span><p>You are Homelander. Stay in character.</p></div><div class="completion-message"><span class="completion-role">user</span><p>Anya: Can you teach me how to bake a cake?</p></div><div class="completion-message"><span class="completion-role">assistant</span><p>Homelander: Of course, sweetheart.</p></div><div class="completion-message"><span class="completion-role">user</span><p>Anya: What's the first step?</p></div></div>
+<div class="completion-screen" id="completion-text" hidden><pre class="completion-raw">You are Homelander. Stay in character.
+
+Anya: Can you teach me how to bake a cake?
+Homelander: Of course, sweetheart.
+Anya: What's the first step?
+Homelander:</pre></div>
+<p class="completion-caption" id="completion-caption" aria-live="polite">Chat Completion: the API receives separate messages, each with a role. The AI generates the next assistant reply.</p></div>
+<p>These are simplified illustrations, not a promise that every provider receives exactly this wording. SillyTavern can include character details, chat history, lorebook entries, and other instructions in the prompt too.</p></section>
+<section class="guide-section" id="roles"><h2>Can Text Completion still understand roles?</h2><p>Yes. Text Completion doesn't require the conversation to look like a screenplay. SillyTavern's <strong>Instruct Mode</strong> can add special markers that show where instructions and messages begin and end.</p><p>For example, a ChatML-style template can use markers such as <code>&lt;|im_start|&gt;user</code> and <code>&lt;|im_end|&gt;</code>. These markers are part of the text prompt rather than separate API role fields.</p><p>The important part is choosing formatting that matches what your model expects. Different models can use different templates.</p></section>
+<section class="guide-section" id="compare"><h2>Compare the two</h2><div class="table-wrap"><table class="guide-table table-stack"><thead><tr><th scope="col">Feature</th><th scope="col">Chat Completion</th><th scope="col">Text Completion</th></tr></thead><tbody>
+<tr><td><span class="table-label">Feature</span><span class="cell-content"><strong>How it's sent</strong></span></td><td><span class="table-label">Chat Completion</span><span class="cell-content">Separate messages with roles</span></td><td><span class="table-label">Text Completion</span><span class="cell-content">One continuous prompt</span></td></tr>
+<tr><td><span class="table-label">Feature</span><span class="cell-content"><strong>Who is speaking?</strong></span></td><td><span class="table-label">Chat Completion</span><span class="cell-content">API message roles</span></td><td><span class="table-label">Text Completion</span><span class="cell-content">Names or text-based role markers</span></td></tr>
+<tr><td><span class="table-label">Feature</span><span class="cell-content"><strong>Prompt formatting</strong></span></td><td><span class="table-label">Chat Completion</span><span class="cell-content">Structured messages assembled by SillyTavern</span></td><td><span class="table-label">Text Completion</span><span class="cell-content">Context and Instruct templates</span></td></tr>
+<tr><td><span class="table-label">Feature</span><span class="cell-content"><strong>Roleplaying</strong></span></td><td><span class="table-label">Chat Completion</span><span class="cell-content">Yes</span></td><td><span class="table-label">Text Completion</span><span class="cell-content">Yes</span></td></tr>
+<tr><td><span class="table-label">Feature</span><span class="cell-content"><strong>Tool calling in SillyTavern</strong></span></td><td><span class="table-label">Chat Completion</span><span class="cell-content">Available with compatible APIs and models</span></td><td><span class="table-label">Text Completion</span><span class="cell-content">Not supported through SillyTavern's Text Completion API mode</span></td></tr>
+</tbody></table></div></section>
+<section class="guide-section" id="settings"><h2>Where are the settings?</h2><p>With <strong>Chat Completion</strong>, you'll usually manage the prompt through <span class="field">Prompt Manager</span>. With <strong>Text Completion</strong>, look under <span class="field">Advanced Formatting</span> for the <span class="field">Context Template</span> and <span class="field">Instruct Mode</span> settings.</p><p>These controls matter because they affect how SillyTavern prepares the prompt before it reaches your model.</p></section>
+<section class="guide-section" id="choose"><h2>Which should I use?</h2><p>Use whichever API format your chosen provider or backend supports and recommends. Neither format automatically makes a model smarter or better at roleplaying. The model and its expected prompt format matter far more.</p><p>Also, these aren't necessarily two completely different kinds of AI. Some models can be used through either API style, depending on the backend.</p><p><strong>Remember it this way:</strong> Chat Completion says, “Here are the messages. Write the assistant's next reply.” Text Completion says, “Here's the text so far. Continue it.”</p></section>
+<footer class="guide-footer" style="text-align:center"><p>Reference documentation: <a href="https://docs.sillytavern.app/usage/api-connections/">API Connections</a> · <a href="https://docs.sillytavern.app/usage/core-concepts/instructmode/">Instruct Mode</a> · <a href="https://docs.sillytavern.app/usage/prompts/prompt-manager/">Prompt Manager</a></p><p>SepsisShock · October 2026</p></footer>
+</article></main><script>
+document.querySelectorAll('[data-format]').forEach(button=>button.addEventListener('click',()=>{
+const chat=button.dataset.format==='chat';
+document.querySelectorAll('[data-format]').forEach(b=>b.setAttribute('aria-pressed',String(b===button)));
+document.getElementById('completion-chat').hidden=!chat;
+document.getElementById('completion-text').hidden=chat;
+document.getElementById('completion-caption').textContent=chat?'Chat Completion: the API receives separate messages, each with a role. The AI generates the next assistant reply.':'Text Completion: the API receives one continuous prompt. The AI continues from the end of that text.';
+}));
+</script></body></html>
