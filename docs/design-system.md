@@ -34,7 +34,7 @@ Every HTML page links `./assets/css/navigation.css` before its page styles and l
 
 ```html
 <nav class="st-site-nav" aria-label="Site navigation">
-  <a class="st-brand" href="./index.html">ST BEGINNER GUIDES</a>
+  <a class="st-brand" href="./index.html">Main</a>
   <div class="st-site-actions">
     <details>
       <summary>Guides</summary>
