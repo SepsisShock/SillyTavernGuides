@@ -134,17 +134,4 @@
     if (img.complete && !img.naturalWidth) onError();
   });
 
-  // Retain the existing site menu's click-outside and Escape behavior.
-  document.addEventListener('pointerdown', event => {
-    document.querySelectorAll('.st-site-nav details[open]').forEach(menu => {
-      if (!menu.contains(event.target)) menu.open = false;
-    });
-  });
-  document.addEventListener('keydown', event => {
-    if (event.key !== 'Escape') return;
-    document.querySelectorAll('.st-site-nav details[open]').forEach(menu => {
-      menu.open = false;
-      menu.querySelector('summary')?.focus();
-    });
-  });
 })();

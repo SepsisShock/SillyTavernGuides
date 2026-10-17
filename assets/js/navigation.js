@@ -1,4 +1,4 @@
-/* One alphabetical guide list shared by every page. Keep page-specific nav styling intact. */
+/* Shared guide links and menu behavior. Styles live in assets/css/navigation.css. */
 (() => {
   'use strict';
   const guides = [

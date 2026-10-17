@@ -606,90 +606,6 @@ mark {
   color: var(--color-muted);
 }
 
-/* Site navigation keeps the existing links and native disclosure. */
-.st-site-nav {
-  max-width: var(--shell-width);
-  margin: 0 auto;
-  padding: 20px var(--space-6) 15px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--space-4);
-  border-bottom: 1px solid var(--color-border);
-  font: 500 .875rem/1.5 var(--font-body);
-  color: var(--color-text);
-}
-
-.st-site-nav a {
-  color: var(--color-muted);
-  text-decoration: none;
-}
-
-.st-site-nav a:hover, .st-site-nav summary:hover {
-  color: var(--color-accent);
-}
-
-.st-site-nav .st-brand {
-  color: var(--color-accent);
-  font-weight: 800;
-  letter-spacing: .12em;
-  font-size: .8rem;
-}
-
-.st-site-actions {
-  display: flex;
-  align-items: center;
-  gap: 22px;
-}
-
-.st-site-nav details {
-  position: relative;
-}
-
-.st-site-nav summary {
-  list-style: none;
-  cursor: pointer;
-  color: var(--color-muted);
-  user-select: none;
-}
-
-.st-site-nav summary::-webkit-details-marker {
-  display: none;
-}
-
-.st-site-nav summary::after {
-  content: " ▾";
-  color: var(--color-accent);
-}
-
-.st-site-nav .st-menu {
-  position: absolute;
-  right: 0;
-  top: calc(100% + 12px);
-  min-width: 220px;
-  padding: var(--space-2);
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  box-shadow: 0 12px 32px #0007;
-  z-index: 5;
-}
-
-.st-site-nav .st-menu a {
-  display: block;
-  padding: 9px 11px;
-  border-radius: var(--radius-sm);
-}
-
-.st-site-nav .st-menu a:hover {
-  background: var(--color-accent-soft);
-}
-
-.st-site-nav a[aria-current="page"] {
-  color: var(--color-accent);
-  font-weight: 700;
-}
-
 .guide-author {
   margin-top: var(--space-3);
 }
@@ -712,9 +628,6 @@ mark {
 }
 
 @media (max-width: 800px) {
-  .st-site-nav {
-    padding-inline: var(--space-5);
-  }
   .guide-shell {
     display: block;
     padding: var(--space-6) var(--space-5) 56px;
@@ -851,9 +764,6 @@ mark {
 }
 
 @media (max-width: 440px) {
-  .st-site-nav {
-    padding-inline: 20px;
-  }
   .guide-shell {
     padding: 28px 20px 40px;
   }
@@ -894,24 +804,11 @@ mark {
   }
 }
 
-@media (max-width: 520px) {
-  .st-site-nav {
-    gap: var(--space-2);
-    flex-wrap: wrap;
-  }
-  .st-site-nav .st-brand {
-    font-size: .75rem;
-    letter-spacing: .08em;
-  }
-  .st-site-actions {
-    gap: 15px;
-  }
-}
 
 @media print {
   :root { color-scheme: light; }
   body { background: white; color: black; }
-  .st-site-nav, .guide-toc, .copy-button, .skip-link { display: none; }
+  .guide-toc, .copy-button, .skip-link { display: none; }
   .guide-shell { display: block; padding: 0; }
   .guide-article, .guide-hero { max-width: none; }
   h1, h2, h3, a, code, .lede, .eyebrow, .field, .table-label { color: black; }
