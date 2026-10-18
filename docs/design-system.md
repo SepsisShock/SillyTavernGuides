@@ -73,7 +73,12 @@ The catalog page is fully usable without JavaScript. Other pages fetch it once
 to populate their menu, search, and any featured section. If JavaScript or the
 catalog request fails, static navigation still leads through the homepage to the
 complete catalog. No nonfunctional search field is shown. The homepage always
-retains a direct Browse all guides link; its featured cards are an enhancement.
+retains a direct Browse all guides link. Its featured cards are also embedded in
+HTML so the four selected guides stay visible when scripts are disabled, the
+catalog request fails, or an older script is cached. After editing featured
+choices or their displayed text, run `python3 scripts/sync-featured.py` to refresh
+that snapshot from the catalog; `--check` verifies it without writing. This is a
+maintenance command, not a required build step for serving the site.
 
 ## Component contracts
 

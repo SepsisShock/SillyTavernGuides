@@ -41,6 +41,8 @@
   description, `data-heading`, and search aliases in `data-keywords`.
   Set `data-featured="1"` through `"4"` on the selected homepage guides, in display
   order; omit it on other entries. Navigation and search update automatically.
+  After changing featured choices or their displayed text, run
+  `python3 scripts/sync-featured.py` to refresh the static homepage cards.
   Keep README listings consistent with their stated scope.
 - Update documentation when a change makes its description inaccurate.
 
@@ -77,6 +79,7 @@
 - Check relevant static content and navigation with JavaScript disabled.
 - For shared CSS/JS changes, identify consuming pages and check affected layouts
   and interactions across them, including distinct legacy page layouts.
-- Run `git diff --check`. Add lightweight validation when it catches meaningful
+- Run `python3 scripts/sync-featured.py --check` to verify the static featured
+  cards match the catalog. Run `git diff --check`. Add lightweight validation when it catches meaningful
   regressions; avoid introducing a tooling stack for a small content edit.
 - Report what changed, what was checked, and any checks that could not run.
