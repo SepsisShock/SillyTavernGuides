@@ -15,8 +15,10 @@ foundation while keeping their own teaching layouts and interactions.
 
 - `assets/css/navigation.css`: the site header, dropdown, focus indicators, and
   responsive and print rules shared by all pages, independent of page themes.
-- `assets/js/navigation.js`: the alphabetical guide list, current-page marker,
-  outside-click dismissal, and Escape handling with focus returned to Guides.
+- `guides.html`: the complete static guide catalog, metadata, search keywords,
+  and featured ordering. `assets/css/catalog.css` styles its compact list.
+- `assets/js/navigation.js`: catalog loading, alphabetical menu, current-page
+  marker, guide search, featured cards, and keyboard/dismissal behavior.
 
 Link shared CSS first, then a guide's own CSS. Load the shared script with `defer`.
 Use paths relative to the HTML file, such as `./assets/css/guides.css`, so project
@@ -48,8 +50,30 @@ Every HTML page links `./assets/css/navigation.css` before its page styles and l
 
 Keep header styles in `navigation.css` and menu behavior in `navigation.js`.
 Avoid page-specific header overrides or duplicate dismissal listeners. Add new
-guide links to the shared list in `navigation.js`. The active link uses color
-and background so its font weight does not change wrapping on narrow screens.
+guide entries to `guides.html`. The active link uses color and background so its
+font weight does not change wrapping on narrow screens. Search is added beside
+Guides after the catalog loads, and moves below the header links on small screens.
+
+## Guide catalog and search
+
+`guides.html` is the single source for guide metadata. Its alphabetical
+`li[data-guide]` entries contain the destination link, `[data-guide-title]`, and
+`[data-guide-description]`. `data-heading` supplies the featured card's short
+headline; `data-keywords` supplies plain-language search aliases. To feature a
+guide, set `data-featured="1"` through `"4"` on the four chosen entries. The value
+sets the homepage display order. Omit the attribute on all other guides.
+
+Search matches all words in a query against titles, descriptions, and keywords,
+regardless of whether a guide is featured. Results are ordinary links. Arrow keys
+move between results; Escape closes results and returns focus to the search
+field. Enter in the search field opens the first visible result. Empty queries
+close the panel, and unmatched queries show a short status message.
+
+The catalog page is fully usable without JavaScript. Other pages fetch it once
+to populate their menu, search, and any featured section. If JavaScript or the
+catalog request fails, static navigation still leads through the homepage to the
+complete catalog. No nonfunctional search field is shown. The homepage always
+retains a direct Browse all guides link; its featured cards are an enhancement.
 
 ## Component contracts
 

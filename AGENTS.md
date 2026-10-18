@@ -6,9 +6,11 @@
 - The site is static HTML, CSS, and vanilla JavaScript hosted on GitHub Pages.
   There is no required build step, package manifest, or automated test suite.
 - Keep the site dependency-free unless the task requires otherwise.
-- `index.html` contains the public guide catalog; root-level topic HTML files
-  contain the individual guides and their demonstrations.
-- `assets/js/navigation.js` contains the shared alphabetical guide menu.
+- `index.html` shows featured guides; `guides.html` is the complete, static
+  alphabetical catalog and the single source for guide metadata and featured order.
+  Root-level topic HTML files contain individual guides and demonstrations.
+- `assets/js/navigation.js` reads the catalog to populate the shared menu, guide
+  search, and homepage featured cards. `assets/css/catalog.css` styles the catalog.
 - `assets/css/guides.css` provides the opt-in shared design foundation;
   `assets/js/guides.js` provides optional contents, copy, and image enhancements.
 - `assets/css/regex.css` contains Regex-specific presentation.
@@ -34,9 +36,12 @@
 - Use relative internal links and asset paths that work under
   `/SillyTavernGuides/`. Preserve `.nojekyll`, existing page URLs, and section
   anchors unless changing them is necessary.
-- When adding, removing, or renaming a guide, update the alphabetical menu in
-  `assets/js/navigation.js` and the catalog in `index.html`. Keep README listings
-  consistent with their stated scope, whether complete or explicitly selected.
+- When adding, removing, or renaming a guide, update its entry in `guides.html`.
+  Keep entries alphabetical. Each `li[data-guide]` supplies its link, title,
+  description, `data-heading`, and search aliases in `data-keywords`.
+  Set `data-featured="1"` through `"4"` on the selected homepage guides, in display
+  order; omit it on other entries. Navigation and search update automatically.
+  Keep README listings consistent with their stated scope.
 - Update documentation when a change makes its description inaccurate.
 
 ## Content and accessibility
