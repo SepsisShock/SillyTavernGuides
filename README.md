@@ -1,12 +1,41 @@
-# ✦ SillyTavern Guides
+<div align="center">
 
-Beginner-friendly guides to SillyTavern’s settings and features, with visual explanations, interactive examples, and practical walkthroughs.
+<sub>◇</sub>
 
-### [Browse all guides ↗](https://sepsisshock.github.io/SillyTavernGuides/#guides)
+<h1>SillyTavern Guides</h1>
 
-Made for the curious, the confused, and anyone who’s ever stared at a setting wondering what on earth it does.
+<p>
+  Beginner-friendly guides to SillyTavern’s settings and features,<br>
+  with visual explanations, interactive examples, and practical walkthroughs.
+</p>
 
-> [!NOTE]
-> These are independent, community-made guides, unaffiliated with SillyTavern. Features and settings may change over time.
+<br>
 
-[SillyTavern](https://github.com/SillyTavern/SillyTavern) · [Official documentation](https://docs.sillytavern.app/)
+<p>
+  <a href="https://sepsisshock.github.io/SillyTavernGuides/#guides"><strong>「 Browse all guides ↗ 」</strong></a>
+</p>
+
+<br>
+
+<p>
+  <em>Made for the curious, the confused, and anyone who’s ever stared<br>
+  at a setting wondering what on earth it does.</em>
+</p>
+
+</div>
+
+---
+
+<p align="center">
+  <sub>Independent, community-made guides, unaffiliated with SillyTavern.<br>
+  Features and settings may change over time.</sub>
+</p>
+
+<br>
+
+<div align="center">
+  <p>
+    <a href="https://github.com/SillyTavern/SillyTavern">SillyTavern</a> · <a href="https://docs.sillytavern.app/">Official documentation</a><br>
+    <sub>SepsisShock · 2026</sub>
+  </p>
+</div>
