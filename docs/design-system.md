@@ -53,6 +53,9 @@ Avoid page-specific header overrides or duplicate dismissal listeners. Add new
 guide entries to `guides.html`. The active link uses color and background so its
 font weight does not change wrapping on narrow screens. Search is added beside
 Guides after the catalog loads, and moves below the header links on small screens.
+The homepage also contains a visible search form above Featured Guides, styled by
+`assets/css/search.css`. Keep shared navigation asset version strings consistent
+across pages when publishing a behavior change.
 
 ## Guide catalog and search
 
@@ -63,18 +66,30 @@ headline; `data-keywords` supplies plain-language search aliases. To feature a
 guide, set `data-featured="1"` through `"4"` on the four chosen entries. The value
 sets the homepage display order. Omit the attribute on all other guides.
 
-Search matches all words in a query against titles, descriptions, and keywords,
-regardless of whether a guide is featured. Results are ordinary links. Arrow keys
-move between results; Escape closes results and returns focus to the search
-field. Enter in the search field opens the first visible result. Empty queries
-close the panel, and unmatched queries show a short status message.
+Search matches all words in a query against titles, descriptions, keywords,
+and the readable text inside every guide, regardless of whether it is featured.
+Title matches come first, followed by topic matches and then guide-text matches.
+Text matches show a short context excerpt. On the first nonempty query, guide
+pages are fetched with at most four requests in flight; text is reused for later
+queries and for both search forms on the same page. Scripts, styles, navigation,
+contents rails, and footers are excluded from the text. No generated text index
+or additional maintenance command is needed when editing a guide.
+
+Results are ordinary links. Arrow keys move between results; Escape closes the
+results and returns focus to the field. The homepage Search button keeps results
+on the page; Enter in header search opens the first visible result. Empty queries
+close results, unmatched queries show a short message, and failed guide requests
+produce a partial-search notice while preserving title and topic matches.
 
 The catalog page is fully usable without JavaScript. Other pages fetch it once
 to populate their menu, search, and any featured section. If JavaScript or the
 catalog request fails, static navigation still leads through the homepage to the
-complete catalog. No nonfunctional search field is shown. The homepage always
-retains a direct Browse all guides link. Its featured cards are also embedded in
-HTML so the four selected guides stay visible when scripts are disabled, the
+complete catalog. The homepage's static search form can submit to
+`guides.html?q=…` if its live handler has not loaded; the catalog initializes
+search from that query. Without JavaScript, the full static guide list remains
+available and the homepage explains that live search requires JavaScript.
+The homepage's featured cards are also embedded in HTML so they stay visible
+when scripts are disabled, the
 catalog request fails, or an older script is cached. After editing featured
 choices or their displayed text, run `python3 scripts/sync-featured.py` to refresh
 that snapshot from the catalog; `--check` verifies it without writing. This is a

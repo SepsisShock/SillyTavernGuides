@@ -78,76 +78,165 @@
     document.querySelector('[data-featured-section]').hidden = entries.length === 0;
   }
 
+  let guideTextPromise;
+  function loadGuideText(guides) {
+    if (guideTextPromise) return guideTextPromise;
+    guideTextPromise = (async () => {
+      const texts = new Map();
+      let next = 0;
+      async function worker() {
+        while (next < guides.length) {
+          const guide = guides[next++];
+          try {
+            let root;
+            if (current === guide.href.split('/').pop()) {
+              root = document.cloneNode(true);
+            } else {
+              const response = await fetch(guide.href);
+              if (!response.ok) throw new Error('Guide unavailable');
+              root = new DOMParser().parseFromString(await response.text(), 'text/html');
+            }
+            root.querySelectorAll('script, style, nav, footer, .guide-toc, [data-guide-search]')
+              .forEach(element => element.remove());
+            const content = root.querySelector('main') || root.body;
+            content.querySelectorAll('br').forEach(element => element.replaceWith(' '));
+            content.querySelectorAll('p, li, h1, h2, h3, h4, pre, td, th, summary, div')
+              .forEach(element => element.append(' '));
+            texts.set(guide.href, content.textContent.replace(/\s+/g, ' ').trim());
+          } catch (_) {
+            texts.set(guide.href, null);
+          }
+        }
+      }
+      await Promise.all(Array.from({length: Math.min(4, guides.length)}, worker));
+      return texts;
+    })();
+    return guideTextPromise;
+  }
+
   function addSearch(actions, guides, index) {
-    const form = document.createElement('form');
-    form.className = 'st-guide-search';
+    const isPageSearch = actions.matches('[data-guide-search]');
+    const form = isPageSearch ? actions : document.createElement('form');
+    form.classList.add('st-guide-search');
     form.setAttribute('role', 'search');
-    form.setAttribute('aria-label', 'Guides');
-    const inputId = 'st-guide-query-' + index;
-    const resultsId = 'st-guide-results-' + index;
-    const label = document.createElement('label');
-    label.htmlFor = inputId;
-    label.className = 'st-visually-hidden';
-    label.textContent = 'Search guides';
-    const input = document.createElement('input');
-    input.id = inputId;
+    if (!form.hasAttribute('aria-label')) form.setAttribute('aria-label', 'Guides');
+    form.action = './guides.html';
+    form.method = 'get';
+
+    const label = form.querySelector('label') || document.createElement('label');
+    const input = form.querySelector('input[type="search"]') || document.createElement('input');
+    if (!input.id) input.id = 'st-guide-query-' + index;
+    label.htmlFor = input.id;
+    if (!isPageSearch) {
+      label.className = 'st-visually-hidden';
+      label.textContent = 'Search guides';
+    }
     input.type = 'search';
-    input.className = 'st-search-input';
-    input.placeholder = 'Search guides…';
+    input.name = 'q';
+    input.classList.add('st-search-input');
+    if (!input.placeholder) input.placeholder = 'Search guides…';
     input.autocomplete = 'off';
-    input.setAttribute('aria-controls', resultsId);
-    input.setAttribute('aria-expanded', 'false');
-    const panel = document.createElement('div');
-    panel.id = resultsId;
-    panel.className = 'st-search-results';
+
+    const panel = form.querySelector('[data-guide-search-results]') || document.createElement('div');
+    if (!panel.id) panel.id = 'st-guide-results-' + index;
+    panel.classList.add('st-search-results');
     panel.hidden = true;
-    const status = document.createElement('p');
+    input.setAttribute('aria-controls', panel.id);
+    input.setAttribute('aria-expanded', 'false');
+    const status = panel.querySelector('[role="status"]') || document.createElement('p');
     status.className = 'st-search-status';
     status.setAttribute('role', 'status');
-    const results = document.createElement('ul');
-    panel.append(status, results);
-    form.append(label, input, panel);
-    actions.append(form);
+    const results = panel.querySelector('ul') || document.createElement('ul');
+    panel.replaceChildren(status, results);
+    if (!isPageSearch) {
+      form.append(label, input, panel);
+      actions.append(form);
+    }
 
     const normalize = value => value.normalize('NFKD').replace(/[\u0300-\u036f]/g, '')
       .toLocaleLowerCase('en').replace(/[^a-z0-9]+/g, ' ').trim();
     const searchable = guides.map(guide => ({
       guide,
-      text: normalize([guide.title, guide.description, guide.keywords].join(' '))
+      title: normalize(guide.title),
+      metadata: normalize([guide.title, guide.heading, guide.description, guide.keywords].join(' ')),
+      text: '',
+      raw: ''
     }));
+    let ready = false;
+    let loading = false;
+    let unavailable = 0;
     const close = () => {
       panel.hidden = true;
       input.setAttribute('aria-expanded', 'false');
+    };
+    const excerpt = (text, terms) => {
+      const lower = text.toLocaleLowerCase('en');
+      const found = terms.map(term => lower.indexOf(term)).filter(position => position >= 0);
+      const start = Math.max(0, (found.length ? Math.min(...found) : 0) - 55);
+      const snippet = text.slice(start, start + 180).trim();
+      return (start ? '…' : '') + snippet + (start + 180 < text.length ? '…' : '');
     };
     const render = () => {
       const query = normalize(input.value);
       if (!query) { close(); return; }
       const terms = query.split(/\s+/);
-      const matches = searchable.filter(item => terms.every(term => item.text.includes(term)));
-      const links = matches.map(({guide}) => {
-        const item = document.createElement('li');
-        const link = makeLink(guide);
+      const matches = searchable.filter(item =>
+        terms.every(term => (item.metadata + ' ' + item.text).includes(term))
+      ).map(item => ({
+        ...item,
+        rank: terms.every(term => item.title.includes(term)) ? 0
+          : terms.every(term => item.metadata.includes(term)) ? 1 : 2
+      })).sort((a, b) => a.rank - b.rank || a.guide.title.localeCompare(b.guide.title, 'en'));
+      const focusedHref = results.contains(document.activeElement)
+        ? document.activeElement.closest('a')?.getAttribute('href') : null;
+      const links = matches.map(item => {
+        const element = document.createElement('li');
+        const link = makeLink(item.guide);
         const title = document.createElement('strong');
-        title.textContent = guide.title;
+        title.textContent = item.guide.title;
         const description = document.createElement('span');
-        description.textContent = guide.description;
+        description.textContent = item.rank === 2
+          ? excerpt(item.raw, terms) : item.guide.description;
         link.replaceChildren(title, description);
-        item.append(link);
-        return item;
+        element.append(link);
+        return element;
       });
       results.replaceChildren(...links);
-      status.textContent = matches.length
-        ? matches.length + (matches.length === 1 ? ' guide found' : ' guides found')
-        : 'No guides found. Try another topic.';
+      const count = matches.length + (matches.length === 1 ? ' guide found' : ' guides found');
+      status.textContent = ready
+        ? (matches.length ? count : 'No guides found. Try another term.')
+          + (unavailable ? ' Some guide text could not be searched.' : '')
+        : 'Searching guide text…';
+      panel.setAttribute('aria-busy', String(!ready));
       panel.hidden = false;
       input.setAttribute('aria-expanded', 'true');
       closeMenus();
+      if (focusedHref) {
+        const replacement = [...results.querySelectorAll('a')]
+          .find(link => link.getAttribute('href') === focusedHref);
+        (replacement || input).focus();
+      }
+      if (!ready && !loading) {
+        loading = true;
+        loadGuideText(guides).then(texts => {
+          searchable.forEach(item => {
+            const raw = texts.get(item.guide.href);
+            if (raw === null) unavailable++;
+            item.raw = raw || '';
+            item.text = normalize(item.raw);
+          });
+          ready = true;
+          if (!panel.hidden) render();
+        });
+      }
     };
+
     input.addEventListener('input', render);
     input.addEventListener('focus', () => { closeMenus(); render(); });
     form.addEventListener('submit', event => {
       event.preventDefault();
-      if (!panel.hidden) results.querySelector('a')?.click();
+      render();
+      if (!isPageSearch && !panel.hidden) results.querySelector('a')?.click();
     });
     form.addEventListener('keydown', event => {
       if (event.key === 'Escape' && !panel.hidden) {
@@ -166,15 +255,22 @@
       else if (active <= 0) input.focus();
       else links[active - 1].focus();
     });
-    form.addEventListener('focusout', event => {
-      if (!form.contains(event.relatedTarget)) close();
-    });
-    document.addEventListener('pointerdown', event => {
-      if (!form.contains(event.target)) close();
-    });
-    menus.forEach(menu => menu.closest('details')?.addEventListener('toggle', () => {
-      if (menu.closest('details').open) close();
-    }));
+    if (!isPageSearch) {
+      form.addEventListener('focusout', event => {
+        if (!form.contains(event.relatedTarget)) close();
+      });
+      document.addEventListener('pointerdown', event => {
+        if (!form.contains(event.target)) close();
+      });
+      menus.forEach(menu => menu.closest('details')?.addEventListener('toggle', () => {
+        if (menu.closest('details').open) close();
+      }));
+    }
+    const initialQuery = new URLSearchParams(window.location.search).get('q');
+    if (initialQuery && (isPageSearch || current === 'guides.html')) {
+      input.value = initialQuery;
+      render();
+    }
   }
 
   catalog.then(guides => {
@@ -185,10 +281,15 @@
       menu.replaceChildren(all, ...guides.map(makeLink));
     });
     showFeatured(guides);
-    document.querySelectorAll('.st-site-actions').forEach((actions, index) => {
+    document.querySelectorAll('.st-site-actions, [data-guide-search]').forEach((actions, index) => {
       addSearch(actions, guides, index);
     });
   }).catch(() => {
-    // The homepage's all-guides link leads to the complete static catalog.
+    // The static form can still submit to the complete catalog.
+    document.querySelectorAll('[data-guide-search-results]').forEach(panel => {
+      panel.hidden = false;
+      panel.querySelector('[role="status"]').textContent =
+        'Search is temporarily unavailable. Press Search to try the guide list.';
+    });
   });
 })();

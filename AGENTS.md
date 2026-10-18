@@ -10,7 +10,8 @@
   alphabetical catalog and the single source for guide metadata and featured order.
   Root-level topic HTML files contain individual guides and demonstrations.
 - `assets/js/navigation.js` reads the catalog to populate the shared menu, guide
-  search, and homepage featured cards. `assets/css/catalog.css` styles the catalog.
+  search, and homepage featured cards. `assets/css/catalog.css` styles the catalog;
+  `assets/css/search.css` styles the visible homepage search form.
 - `assets/css/guides.css` provides the opt-in shared design foundation;
   `assets/js/guides.js` provides optional contents, copy, and image enhancements.
 - `assets/css/regex.css` contains Regex-specific presentation.
@@ -80,6 +81,6 @@
 - For shared CSS/JS changes, identify consuming pages and check affected layouts
   and interactions across them, including distinct legacy page layouts.
 - Run `python3 scripts/sync-featured.py --check` to verify the static featured
-  cards match the catalog. Run `git diff --check`. Add lightweight validation when it catches meaningful
-  regressions; avoid introducing a tooling stack for a small content edit.
+  cards match the catalog. Run `git diff --check`. Add lightweight validation when
+  it catches meaningful regressions; avoid introducing a tooling stack for a small content edit.
 - Report what changed, what was checked, and any checks that could not run.
