@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="A beginner-friendly, interactive guide to tool calls and function calling in SillyTavern.">
 <title>Tool Calls | SillyTavern Guide</title>
-<link rel="stylesheet" href="./assets/css/navigation.css?v=term-search-1">
+<link rel="stylesheet" href="./assets/css/navigation.css?v=guide-menu-1">
 <style>
 :root{color-scheme:dark;--bg:#10151c;--surface:#19212b;--surface2:#202d38;--line:#344353;--text:#e5eaf2;--muted:#b2c1d1;--accent:#83c9d9;--gold:#e8bd74;--green:#9bd8af;--purple:#baa7e7;--red:#e9a3a8}
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(circle at 83% 0%,#243b47 0,transparent 560px),var(--bg);color:var(--text);font:16px/1.7 system-ui,-apple-system,Segoe UI,sans-serif}
@@ -75,9 +75,9 @@ table th:first-child,table td:first-child{min-width:175px}
 .compare,.mini-grid{grid-template-columns:1fr}
 }
 @media print{.page.guide-shell{display:block}.page > nav{display:none}}
-</style><script src="./assets/js/navigation.js?v=term-search-1" defer></script>
+</style><script src="./assets/js/navigation.js?v=guide-menu-1" defer></script>
 </head>
-<body><nav class="st-site-nav" aria-label="Site navigation"><a class="st-brand" href="./index.html">Main</a><div class="st-site-actions"><details><summary>Guides</summary><div class="st-menu" data-guide-menu><a href="./index.html#guides">Browse all guides</a></div></details></div></nav><main class="page guide-shell">
+<body><nav class="st-site-nav" aria-label="Site navigation"><a class="st-brand" href="./index.html">Main</a><div class="st-site-actions"><details><summary>Guides</summary><div class="st-menu" data-guide-menu><a href="./character-names-behavior.html">Character Names Behavior</a><a href="./chat-vs-text-completion.html">Chat Completion vs Text Completion</a><a href="./continue-postfix.html">Continue Postfix</a><a href="./ppp.html">Prompt Post-Processing</a><a href="./regex.html">Regex Basics</a><a href="./sampler-settings.html">Sampler Settings</a><a href="./seed.html">Seed</a><a href="./squash-system-messages.html">Squash System Messages</a><a href="./tool-calls.html" aria-current="page">Tool Calls</a><a href="./zen-sliders-mad-lab.html">Zen Sliders &amp; Mad Lab Mode</a></div></details></div></nav><main class="page guide-shell">
 <header class="hero"><h1>Tool Calls</h1><p class="lead">How an AI asks another program for help, and what actually happens when it does.</p></header>
 <nav aria-label="On this page"><strong>On this page</strong><div class="navlinks"><a href="#what">What are tool calls?</a><a href="#demo">Try an example</a><a href="#enable">Turn them on</a><a href="#api">Chat vs. Text</a><a href="#tools">Available tools</a><a href="#ppp">PPP &amp; tools</a><a href="#faq">Questions</a></div></nav>
 <section id="what"><h2>What is a tool call?</h2><p>Imagine the AI as a receptionist. You ask, “What’s 2 + 2?” They already know the answer. But if you ask, “Has my package arrived?” they contact the mailroom, get the answer, and tell you.</p><p>The AI works similarly: it can answer directly or request help when a suitable tool is available. <strong style="color:var(--text)">A tool call is when the AI requests that another program perform a specific job.</strong> SillyTavern or a compatible integration runs that tool, returns the result, and the AI can use it to reply.</p>

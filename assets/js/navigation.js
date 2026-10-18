@@ -1,4 +1,4 @@
-/* The static catalog in guides.html supplies navigation, search, and featured cards. */
+/* Shared guide metadata supplies navigation, search, and featured cards. */
 (() => {
   'use strict';
 
@@ -13,26 +13,13 @@
     return link;
   };
 
-  const readCatalog = (root) => [...root.querySelectorAll('[data-guide]')].map(entry => ({
-    href: entry.querySelector('a').getAttribute('href'),
-    title: entry.querySelector('[data-guide-title]').textContent.trim(),
-    description: entry.querySelector('[data-guide-description]').textContent.trim(),
-    heading: entry.dataset.heading,
-    keywords: entry.dataset.keywords || '',
-    featured: Number(entry.dataset.featured) || 0
-  })).sort((a, b) => a.title.localeCompare(b.title, 'en'));
-
-  const localCatalog = document.querySelector('[data-guide-catalog]');
-  const catalog = localCatalog
-    ? Promise.resolve(readCatalog(localCatalog))
-    : fetch('./guides.html').then(response => {
-      if (!response.ok) throw new Error('Catalog unavailable');
-      return response.text();
-    }).then(html => {
-      const root = new DOMParser().parseFromString(html, 'text/html');
-      if (!root.querySelector('[data-guide-catalog]')) throw new Error('Catalog unavailable');
-      return readCatalog(root);
-    });
+  const catalog = fetch('./assets/data/guides.json?v=guide-menu-1').then(response => {
+    if (!response.ok) throw new Error('Catalog unavailable');
+    return response.json();
+  }).then(guides => {
+    if (!Array.isArray(guides) || !guides.length) throw new Error('Catalog unavailable');
+    return guides.sort((a, b) => a.title.localeCompare(b.title, 'en'));
+  });
 
   const closeMenus = () => menus.forEach(menu => {
     const details = menu.closest('details');
@@ -120,7 +107,7 @@
     form.classList.add('st-guide-search');
     form.setAttribute('role', 'search');
     if (!form.hasAttribute('aria-label')) form.setAttribute('aria-label', 'Guides');
-    form.action = './guides.html';
+    form.action = './index.html#main-guide-query';
     form.method = 'get';
 
     const label = form.querySelector('label') || document.createElement('label');
@@ -267,7 +254,7 @@
       }));
     }
     const initialQuery = new URLSearchParams(window.location.search).get('q');
-    if (initialQuery && (isPageSearch || current === 'guides.html')) {
+    if (initialQuery && isPageSearch) {
       input.value = initialQuery;
       render();
     }
@@ -276,20 +263,18 @@
   catalog.then(guides => {
     if (!guides.length) return;
     menus.forEach(menu => {
-      const all = makeLink({href: './guides.html', title: 'Browse all guides'});
-      all.className = 'st-menu-all';
-      menu.replaceChildren(all, ...guides.map(makeLink));
+      menu.replaceChildren(...guides.map(makeLink));
     });
     showFeatured(guides);
     document.querySelectorAll('.st-site-actions, [data-guide-search]').forEach((actions, index) => {
       addSearch(actions, guides, index);
     });
   }).catch(() => {
-    // The static form can still submit to the complete catalog.
+    // Static guide links and featured cards remain available.
     document.querySelectorAll('[data-guide-search-results]').forEach(panel => {
       panel.hidden = false;
       panel.querySelector('[role="status"]').textContent =
-        'Search is temporarily unavailable. Press Search to try the guide list.';
+        'Search is temporarily unavailable. Try again shortly.';
     });
   });
 })();

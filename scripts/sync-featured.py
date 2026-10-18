@@ -1,45 +1,11 @@
 #!/usr/bin/env python3
-"""Refresh the homepage's static featured cards from guides.html."""
+"""Sync static featured cards and guide menus from the shared JSON catalog."""
 
 import argparse
 from html import escape
-from html.parser import HTMLParser
+import json
 from pathlib import Path
 import re
-
-
-class CatalogParser(HTMLParser):
-    def __init__(self):
-        super().__init__()
-        self.guides = []
-        self.current = None
-        self.field = None
-
-    def handle_starttag(self, tag, attrs):
-        attrs = dict(attrs)
-        if tag == "li" and "data-guide" in attrs:
-            self.current = {
-                "rank": int(attrs.get("data-featured", "0")),
-                "heading": attrs.get("data-heading", ""),
-            }
-        elif self.current is not None:
-            if tag == "a":
-                self.current["href"] = attrs["href"]
-            elif "data-guide-title" in attrs:
-                self.field = "title"
-            elif "data-guide-description" in attrs:
-                self.field = "description"
-
-    def handle_data(self, text):
-        if self.current is not None and self.field:
-            self.current[self.field] = self.current.get(self.field, "") + text
-
-    def handle_endtag(self, tag):
-        if tag in ("h2", "p"):
-            self.field = None
-        elif tag == "li" and self.current is not None:
-            self.guides.append(self.current)
-            self.current = None
 
 
 def main():
@@ -47,13 +13,12 @@ def main():
     args.add_argument("--check", action="store_true", help="Check without writing")
     options = args.parse_args()
     root = Path(__file__).resolve().parents[1]
-    catalog = CatalogParser()
-    catalog.feed((root / "guides.html").read_text(encoding="utf-8"))
+    guides = json.loads((root / "assets/data/guides.json").read_text(encoding="utf-8"))
     featured = sorted(
-        (guide for guide in catalog.guides if guide["rank"] > 0),
-        key=lambda guide: guide["rank"],
+        (guide for guide in guides if guide.get("featured", 0) > 0),
+        key=lambda guide: guide["featured"],
     )
-    if not featured or len({guide["rank"] for guide in featured}) != len(featured):
+    if not featured or len({guide["featured"] for guide in featured}) != len(featured):
         raise SystemExit("Featured guides need unique positive display ranks.")
     cards = []
     for guide in featured:
@@ -81,13 +46,37 @@ def main():
     if count != 1:
         raise SystemExit("Expected one featured guide container in index.html.")
     after = after.replace('<div data-featured-section hidden>', '<div data-featured-section>')
+    updates = {path: after}
+    ordered = sorted(guides, key=lambda guide: guide["title"].casefold())
+    for page in sorted(root.glob("*.html")):
+        links = []
+        for guide in ordered:
+            active = ' aria-current="page"' if guide["href"].split("/")[-1] == page.name else ""
+            links.append(
+                f'<a href="{escape(guide["href"], quote=True)}"{active}>'
+                f'{escape(guide["title"])}</a>'
+            )
+        content = updates.get(page, page.read_text(encoding="utf-8"))
+        updated, menus = re.subn(
+            r'(<div class="st-menu" data-guide-menu>)[\s\S]*?(</div>)',
+            lambda match: match[1] + "".join(links) + match[2],
+            content,
+        )
+        if menus != 1:
+            raise SystemExit(f"Expected one shared guide menu in {page.name}.")
+        updates[page] = updated
     if options.check:
-        if after != before:
-            raise SystemExit("Featured cards need updating: python3 scripts/sync-featured.py")
-        print(f"Verified {len(featured)} static featured cards.")
+        stale = [
+            page.name for page, content in updates.items()
+            if page.read_text(encoding="utf-8") != content
+        ]
+        if stale:
+            raise SystemExit("Run python3 scripts/sync-featured.py to update: " + ", ".join(stale))
+        print(f"Verified {len(featured)} featured cards and {len(updates)} guide menus.")
     else:
-        path.write_text(after, encoding="utf-8")
-        print(f"Updated {len(featured)} static featured cards.")
+        for page, content in updates.items():
+            page.write_text(content, encoding="utf-8")
+        print(f"Updated {len(featured)} featured cards and {len(updates)} guide menus.")
 
 
 if __name__ == "__main__":

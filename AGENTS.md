@@ -6,12 +6,12 @@
 - The site is static HTML, CSS, and vanilla JavaScript hosted on GitHub Pages.
   There is no required build step, package manifest, or automated test suite.
 - Keep the site dependency-free unless the task requires otherwise.
-- `index.html` shows featured guides; `guides.html` is the complete, static
-  alphabetical catalog and the single source for guide metadata and featured order.
+- `index.html` shows featured guides; `assets/data/guides.json` is the single source
+  for guide metadata and featured order.
   Root-level topic HTML files contain individual guides and demonstrations.
 - `assets/js/navigation.js` reads the catalog to populate the shared menu, guide
-  search, and homepage featured cards. `assets/css/catalog.css` styles the catalog;
-  `assets/css/search.css` styles the visible homepage search form.
+  search, and homepage featured cards. `assets/css/search.css` styles the visible
+  homepage search form.
 - `assets/css/guides.css` provides the opt-in shared design foundation;
   `assets/js/guides.js` provides optional contents, copy, and image enhancements.
 - `assets/css/regex.css` contains Regex-specific presentation.
@@ -37,13 +37,12 @@
 - Use relative internal links and asset paths that work under
   `/SillyTavernGuides/`. Preserve `.nojekyll`, existing page URLs, and section
   anchors unless changing them is necessary.
-- When adding, removing, or renaming a guide, update its entry in `guides.html`.
-  Keep entries alphabetical. Each `li[data-guide]` supplies its link, title,
-  description, `data-heading`, and search aliases in `data-keywords`.
-  Set `data-featured="1"` through `"4"` on the selected homepage guides, in display
-  order; omit it on other entries. Navigation and search update automatically.
-  After changing featured choices or their displayed text, run
-  `python3 scripts/sync-featured.py` to refresh the static homepage cards.
+- When adding, removing, or renaming a guide, update `assets/data/guides.json`.
+  Keep entries alphabetical, with href, title, heading, description, keywords,
+  and featured fields. Set featured to 1 through 4 on the chosen homepage guides,
+  in display order; use 0 on the others.
+  Run `python3 scripts/sync-featured.py` after catalog changes to refresh the
+  static homepage cards and complete guide menus. Search reads the same catalog.
   Keep README listings consistent with their stated scope.
 - Update documentation when a change makes its description inaccurate.
 
@@ -58,8 +57,8 @@
 - Preserve screenshot sources, fallback behavior, proportions, and useful alt
   text unless the task calls for changing them.
 - Preserve static reference content and useful navigation when scripts fail.
-  JavaScript should enhance them. New guide menus should include a static
-  “Browse all guides” link to `./index.html#guides` that JavaScript can replace.
+  JavaScript should enhance them. Guide menus contain static links to each guide;
+  regenerate them from the JSON catalog rather than adding a separate directory link.
 - Use semantic headings and native controls, unique IDs, explicit labels, and
   visible keyboard focus. Preserve focus restoration when menus close.
 - Preserve table header relationships, avoid conveying meaning by color alone,
@@ -81,6 +80,6 @@
 - For shared CSS/JS changes, identify consuming pages and check affected layouts
   and interactions across them, including distinct legacy page layouts.
 - Run `python3 scripts/sync-featured.py --check` to verify the static featured
-  cards match the catalog. Run `git diff --check`. Add lightweight validation when
+  cards and menus match the catalog. Run `git diff --check`. Add lightweight validation when
   it catches meaningful regressions; avoid introducing a tooling stack for a small content edit.
 - Report what changed, what was checked, and any checks that could not run.
