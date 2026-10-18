@@ -2,7 +2,7 @@
 
 <sub>◇</sub>
 
-<h1>SillyTavern Guides</h1>
+<h1>SillyTavern Noob Guides</h1>
 
 <p>
   Beginner-friendly guides to SillyTavern’s settings and features,<br>
