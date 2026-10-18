@@ -5,6 +5,14 @@
 <link rel="stylesheet" href="./assets/css/navigation.css?v=guide-menu-1">
 <link rel="stylesheet" href="./assets/css/guides.css"><script src="./assets/js/guides.js" defer></script><script src="./assets/js/navigation.js?v=guide-menu-1" defer></script>
 <style>
+.responses-drawer{margin:28px 0;border:1px solid var(--color-border);border-radius:var(--radius-md);background:var(--color-surface);overflow:hidden}
+.responses-drawer summary{cursor:pointer;padding:16px 20px;font-weight:700;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:12px}
+.responses-drawer summary::-webkit-details-marker{display:none}
+.responses-drawer summary::after{content:"+";font-size:1.3rem;color:var(--color-muted);line-height:1}
+.responses-drawer[open] summary::after{content:"−"}
+.responses-drawer summary:focus-visible{outline:2px solid var(--color-accent);outline-offset:-3px}
+.responses-drawer-content{padding:0 20px 16px;border-top:1px solid var(--color-border-soft)}
+.responses-drawer-content p{margin:14px 0}
 .history-note{border-left-color:var(--color-warning);background:var(--color-warning-bg)}
 .history-note > strong{display:block;color:var(--color-warning);line-height:1.55}
 .completion-demo{margin:24px 0;padding:24px;border:1px solid var(--color-border);border-radius:var(--radius-md);background:var(--color-surface)}
@@ -50,6 +58,7 @@ Homelander:</pre></div>
 </tbody></table></div></section>
 <section class="guide-section" id="settings"><h2>Where are the settings?</h2><p>With <strong>Chat Completion</strong>, you'll usually manage the prompt through <span class="field">Prompt Manager</span>. With <strong>Text Completion</strong>, look under <span class="field">Advanced Formatting</span> for the <span class="field">Context Template</span> and <span class="field">Instruct Mode</span> settings.</p><p>These controls matter because they affect how SillyTavern prepares the prompt before it reaches your model.</p></section>
 <section class="guide-section" id="choose"><h2>Which should I use?</h2><p>If your model supports both formats, feel free to experiment! Otherwise, or if you're unsure where to start, use the API format recommended for your model and backend.</p><p>Even when both are supported, performance can differ significantly depending on how prompts are formatted. A model that roleplays beautifully with one setup might struggle with the other.</p></section>
+<details class="responses-drawer"><summary>What about OpenAI's Responses API?</summary><div class="responses-drawer-content"><p>OpenAI introduced the Responses API in 2025. It's a newer way for applications to communicate with AI models, combining conversations, tool calling, and other features into one system.</p><p>Unlike ordinary Chat Completion, it can manage certain tools directly through OpenAI, such as web searches, without requiring the application to run those tools itself.</p><p>However, being newer doesn't necessarily mean it will replace Chat Completion or be added to SillyTavern.</p></div></details>
 <footer class="guide-footer" style="text-align:center"><p>Reference documentation: <a href="https://docs.sillytavern.app/usage/api-connections/">API Connections</a> · <a href="https://docs.sillytavern.app/usage/core-concepts/instructmode/">Instruct Mode</a> · <a href="https://docs.sillytavern.app/usage/prompts/prompt-manager/">Prompt Manager</a></p><p>SepsisShock · October 2026</p></footer>
 </article></main><script>
 document.querySelectorAll('[data-format]').forEach(button=>button.addEventListener('click',()=>{
