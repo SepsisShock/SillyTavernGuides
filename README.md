@@ -1,85 +1,12 @@
-<div align="center">
-
 # ✦ SillyTavern Guides
 
-<sub>Established October 2026</sub>
+Beginner-friendly guides to SillyTavern’s settings and features, with visual explanations, interactive examples, and practical walkthroughs.
 
-Beginner-friendly explanations, visual walkthroughs, and practical examples for the settings and features that deserve a closer look.
+### [Browse all guides ↗](https://sepsisshock.github.io/SillyTavernGuides/#guides)
 
-<br>
-
-[**Visit the Website**](https://sepsisshock.github.io/SillyTavernGuides/) &nbsp;·&nbsp; [**Browse the Guides**](#-guide-library) &nbsp;·&nbsp; [**SillyTavern**](https://github.com/SillyTavern/SillyTavern) &nbsp;·&nbsp; [**Official Docs**](https://docs.sillytavern.app/)
-
-</div>
-
----
-
-## ◈ Guide Library
-
-The guides are written to make unfamiliar features easier to understand, with diagrams, examples, and explanations where they help.
-
-<table>
-  <tr>
-    <th width="50%" align="left">PROMPT POST-PROCESSING</th>
-    <th width="50%" align="left">REGEX BASICS</th>
-  </tr>
-  <tr>
-    <td valign="top">
-      <strong>See how your prompt gets packed.</strong>
-      <br><br>
-      A visual introduction to Prompt Post-Processing (PPP), including how SillyTavern arranges messages before sending them to an API.
-      <br><br>
-      <a href="https://sepsisshock.github.io/SillyTavernGuides/ppp.html"><strong>↗ Open Prompt Post-Processing</strong></a>
-    </td>
-    <td valign="top">
-      <strong>Find it. Change it. Control it.</strong>
-      <br><br>
-      Learn how SillyTavern regex scripts work, what goes in Find Regex and Replace With, and how the available settings affect your chat.
-      <br><br>
-      <a href="https://sepsisshock.github.io/SillyTavernGuides/regex.html"><strong>↗ Open Regex Basics</strong></a>
-    </td>
-  </tr>
-  <tr>
-    <th colspan="2" align="left">TOOL CALLS</th>
-  </tr>
-  <tr>
-    <td colspan="2" valign="top">
-      <strong>When the AI needs a little help.</strong>
-      <br><br>
-      Follow a receptionist-style interactive example to learn how tool calls work, where to enable function calling, and what they can cost.
-      <br><br>
-      <a href="https://sepsisshock.github.io/SillyTavernGuides/tool-calls.html"><strong>↗ Open Tool Calls</strong></a>
-    </td>
-  </tr>
-</table>
-
-<!--
-ADD MORE GUIDES HERE.
-
-For new guides, keep the topics in alphabetical order. Copy the table structure above and change:
-- The topic in each <th>.
-- The short description in each <td>.
-- The linked HTML filename.
-
-If you have an odd number of guides, use one full-width <td colspan="2"> entry,
-or add a single standalone entry below the table.
-
-Keep all entries within the Guide Library section so visitors can find them easily.
--->
-
-<br>
-
-## ◇ About This Collection
-
-SillyTavern has plenty of useful features, but understanding what they actually do can take some digging. These guides aim to make that learning process a little less intimidating, especially if you're new to the hobby.
-
-Some topics use interactive demonstrations; others use diagrams, tables, or step-by-step examples. The presentation changes to suit the subject.
+Made for the curious, the confused, and anyone who’s ever stared at a setting wondering what on earth it does.
 
 > [!NOTE]
-> These are independent, community-made guides and are not official SillyTavern documentation. Features and settings may change as SillyTavern develops.
+> These are independent, community-made guides, unaffiliated with SillyTavern. Features and settings may change over time.
 
----
-
-<div align="center">
-  <sub>Made for the curious, the confused, and anyone who's ever stared at a setting wondering what on earth it does.</sub>
-</div>
+[SillyTavern](https://github.com/SillyTavern/SillyTavern) · [Official documentation](https://docs.sillytavern.app/)
