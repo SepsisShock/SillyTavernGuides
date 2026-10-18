@@ -10,7 +10,7 @@
 <br>
 
 <p>
-  <a href="https://sepsisshock.github.io/SillyTavernGuides/#guides"><strong>「 Website version: Browse all guides 」</strong></a>
+  <a href="https://sepsisshock.github.io/SillyTavernGuides"><strong>「 Website version: Browse all guides 」</strong></a>
 </p>
 
 </div>
