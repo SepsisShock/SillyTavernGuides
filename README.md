@@ -1,7 +1,5 @@
 <div align="center">
 
-<sub>◇</sub>
-
 <h1>SillyTavern Noob Guides</h1>
 
 <p>
@@ -16,11 +14,6 @@
 </p>
 
 <br>
-
-<p>
-  <em>Made for the curious, the confused, and anyone who’s ever stared<br>
-  at a setting wondering what on earth it does.</em>
-</p>
 
 </div>
 
